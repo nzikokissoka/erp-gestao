@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+	<title>Menu2</title>
+	<style>
+	
+	  /* Estilos gerais */
+	  *{
+	     box-sizing: border-box;
+	  }
+	  
+	  body {
+		    font-family: Arial, sans-serif;
+		    margin: 0;
+		    padding: 0;
+		    font-size: 11px;
+		    position: relative;
+		    height: 100vh; /* Definindo altura da tela inteira */
+	  }
+	  
+	  /* Estilo da seção superior */
+	  #topo {
+		    background-color: white;
+		    color: black;
+		    position: absolute;
+		    top: 1px; /* Posição a 1px do topo */
+		    left: 0;
+		    right: 0;
+		    height: 41px; /* Altura ajustada 50*/
+		    text-align: center;
+		    line-height: 50px;
+	  }
+	  
+	  /* Estilo da seção central */
+	  #centro {
+	    background-color: white; /*#f0f0f0*/
+	    position: absolute;
+	    top: 42px; /* Posição a 42px do topo */
+	    left: 0;
+	    right: 0; 
+	    padding-left: 4px;
+	    padding-right: 4px;
+	    bottom: 4%; /* Ajuste para metade da altura da tela 50*/
+	    overflow-y: auto; /* Adicionando barra de rolagem se o conteúdo for longo */
+	  }
+	  
+	  /* Estilo da seção da base */
+	  #base {
+	    background-color: white; /*#f0f0f0*/
+	    color: red;   
+		font-size: 10px;
+	    position: absolute;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	    height: 25px; /* Altura ajustada para metade da altura do topo */
+	    text-align: center;
+	    line-height: 15px; /* Centralizando verticalmente o texto */
+	  }
+	  
+	  
+	  
+	  .container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 90%; /* Ajuste conforme necessário */
+            max-width: 600px; /* Largura máxima do container */
+            margin: 0 auto; /* Centralizar o conteúdo */
+        }
+
+        .item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-sizing: border-box;
+            width: calc(100% / 3); /* Cada item ocupa 1/3 da largura */
+        }
+
+        .colspan3 {
+            width: calc(100% - ((100% / 3) * 2)); /* Largura de duas colunas */
+        }
+        
+        
+        /* Estilos responsivos */
+        @media only screen and (max-width: 768px) {
+            .form-column {
+                flex: 1 1 100%; /* Em telas menores, ocupa 100% da largura */
+                margin-right: 0;
+            }
+            
+            .item, .colspan3 {
+                width: 100%; /* Em telas menores, ocupa 100% da largura */
+            }
+            
+        }
+	  
+	  
+	  
+	  
+	    
+	  }
+	</style>
+</h:head> 
+<h:body> 
+	
+	<div id="topo">		
+		<p:menubar>
+            <p:submenu label="Menu">
+                <p:menuitem value="Página 1" url="#" />
+                <p:menuitem value="Página 2" url="#" />
+                <p:menuitem value="Página 3" url="#" />
+                <p:menuitem value="Página 4" url="#" />
+            </p:submenu>
+        </p:menubar>	
+	</div>
+	
+	<div id="centro">
+	    <h2>Seção Central</h2>
+	    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed ante sed libero sagittis accumsan. Nulla facilisi. Nullam tincidunt justo id nunc dignissim volutpat. Ut tempus euismod arcu, in aliquet libero placerat a. Aliquam ultrices enim justo, eget malesuada neque congue eget. Curabitur ac turpis lorem.</p>
+	    <!-- Adicione aqui o conteúdo da seção central -->
+	    
+	    <h:form>
+	    	
+	    	<div class="container">
+		        <div class="item">1</div>
+		        <div class="item">2</div>
+		        <div class="item colspan3">Colspan 3</div>
+		        <div class="item">4</div>
+		        <div class="item">5</div>
+		        <div class="item">6</div>
+		    </div>
+		    
+		</h:form>
+	    
+	</div>
+	
+	<div id="base">
+		<div class="form-row">
+			<div class="form-column">
+				Secção base
+			</div>
+			<div class="form-column">
+				Olá usario...
+			</div>
+		</div>
+	</div>	
+	
+</h:body> 
+</html>

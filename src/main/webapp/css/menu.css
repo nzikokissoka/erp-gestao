@@ -1,0 +1,114 @@
+@charset "UTF-8";
+/* Estilo para o menu horizontal */
+html,body {	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+
+/* Estilo para o menu horizontal */
+ul.menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #333; /* Cor de fundo do menu */
+}
+
+/* Estilo para os itens do menu principal */
+ul.menu > li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+/* Estilo para links no menu principal */
+ul.menu > li > a {
+    text-decoration: none;
+    color: #fff; /* Cor do texto */
+    padding: 10px; /* Espaçamento interno */
+}
+
+/* Estilo para ícones PrimeIcons no menu principal */
+ul.menu > li > a > i {
+    font-size: 20px; /* Tamanho do ícone */
+    margin-right: 5px; /* Espaçamento entre o ícone e o texto */
+}
+
+/* Estilo de hover para os links no menu principal */
+ul.menu > li > a:hover {
+    background-color: #555; /* Cor de fundo ao passar o mouse */
+}
+
+/* Estilo para os subitens do menu */
+ul.menu > li ul.submenu {
+    display: none;
+    position: absolute;
+    background-color: #333; /* Cor de fundo do submenu */
+    margin: 0;
+    padding: 0;
+    width: auto; /* Largura automática com base no conteúdo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    z-index: 1; /* Para sobrepor outros elementos */
+}
+
+/* Estilo para os itens dos subitens */
+ul.menu > li ul.submenu > li {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo para links nos subitens */
+ul.menu > li ul.submenu > li > a {
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    padding: 10px;
+}
+
+/* Estilo de hover para os links nos subitens */
+ul.menu > li ul.submenu > li > a:hover {
+    background-color: #555;
+}
+
+/* Estilo para os subsubitens do menu */
+ul.menu > li ul.submenu ul.subsubmenu {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    left: 100%; /* Alinhamento à direita em relação ao pai */
+    top: 0;
+}
+
+/* Estilo para os itens dos subsubitens */
+ul.menu > li ul.submenu ul.subsubmenu > li {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo para links nos subsubitens */
+ul.menu > li ul.submenu ul.subsubmenu > li > a {
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    padding: 10px;
+}
+
+/* Estilo de hover para os links nos subsubitens */
+ul.menu > li ul.submenu ul.subsubmenu > li > a:hover {
+    background-color: #555;
+}
+
+/* Mostrar subitens e subsubitens quando o item pai estiver em foco ou hover */
+ul.menu > li:hover ul.submenu {
+    display: block;
+}
+
+ul.menu > li ul.submenu > li:hover ul.subsubmenu {
+    display: block;
+}
+

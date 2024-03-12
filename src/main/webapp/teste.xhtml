@@ -1,0 +1,330 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+	<link rel="stylesheet" href="css/menu.css"/>
+	<title>Menu</title>
+	<style>
+	
+	  /* Estilos gerais */
+	  *{
+	     box-sizing: border-box;
+	  }
+	  
+	  body {
+		    font-family: Arial, sans-serif;
+		    margin: 0;
+		    padding: 0;
+		    font-size: 11px;
+		    position: relative;
+		    height: 100vh; /* Definindo altura da tela inteira */
+	  }
+	  
+	  /* Estilo da seção superior */
+	  #topo {
+		    background-color: white;
+		    color: black;
+		    position: absolute;
+		    top: 1px; /* Posição a 1px do topo */
+		    left: 0;
+		    right: 0;
+		    height: 41px; /* Altura ajustada 50*/
+		    text-align: center;
+		    line-height: 50px;
+	  }
+	  
+	  /* Estilo da seção central */
+	  #centro {
+	    background-color: white; /*#f0f0f0*/
+	    position: absolute;
+	    top: 42px; /* Posição a 42px do topo */
+	    left: 0;
+	    right: 0; 
+	    padding-left: 4px;
+	    padding-right: 4px;
+	    bottom: 4%; /* Ajuste para metade da altura da tela 50*/
+	    overflow-y: auto; /* Adicionando barra de rolagem se o conteúdo for longo */
+	  }
+	  
+	  /* Estilo da seção da base */
+	  #base {
+	    background-color: green; /*#f0f0f0*/
+	    color: red;   
+		font-size: 10px;
+	    position: absolute;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	    height: 25px; /* Altura ajustada para metade da altura do topo */
+	    text-align: center;
+	    line-height: 15px; /* Centralizando verticalmente o texto */
+	  }
+	  
+	  
+	  
+	  /* Layout do formulário */
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        
+        .form-column {
+            flex: 1 1 30%; /* Cresce e encolhe com o tamanho da tela */
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .form-column:last-child {
+            margin-right: 0;
+        }
+        
+        /* Estilo de div container */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 90%; /* Ajuste conforme necessário */
+            margin: 0 auto; /* Centralizar o conteúdo */
+        }
+        
+        /* Estilo dos inputs */
+        .custom-input,
+        .custom-textarea{
+            /* Ajuste para compensar a margem */
+            /*width: calc(100% - 10px); 
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 11px;
+            box-sizing: border-box;*/
+            width: 100%;
+		    border: 1px solid #ccc;
+		    border-radius: 4px;
+		    font-size: 11px;
+        }
+        
+        
+        .custom-select{
+        	width: 100%;
+        	border: 1px solid #ccc;
+        	border-radius: 4px;
+        	font-size: 11px;
+        }
+        
+
+        /* Estilo dos radio buttons */
+        .custom-radio {
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        /* Estilo dos botões */
+        .custom-button {
+            /*width: 100%;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 11px;*/
+            width: 100%; 
+            cursor: pointer;
+            transition: background-color 0.3s;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+
+        .custom-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilo do dataTable */
+        .custom-datatable {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+            font-size: 11px;
+        }
+
+        /*.custom-datatable th,
+        .custom-datatable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }*/
+        
+        .custom-toolbar{
+        	
+        	width: 90%;
+        	margin: 0 auto;
+        	
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+
+        /* Estilos responsivos */
+        @media only screen and (max-width: 768px) {
+            .form-column {
+                flex: 1 1 100%; /* Em telas menores, ocupa 100% da largura */
+                margin-right: 0;
+            }
+        }
+        
+        
+        
+        
+	  
+	  
+	  
+	  
+	    
+	  }
+	</style>
+</h:head> 
+<h:body> 
+	
+	<div id="topo">		
+		<p:menubar>
+            <p:submenu label="Menu">
+                <p:menuitem value="Página 1" url="#" />
+                <p:menuitem value="Página 2" url="#" />
+                <p:menuitem value="Página 3" url="#" />
+                <p:menuitem value="Página 4" url="#" />
+            </p:submenu>
+        </p:menubar>	
+	</div>
+	
+	<div id="centro">
+	    <h2>Seção Central</h2>
+	    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed ante sed libero sagittis accumsan. Nulla facilisi. Nullam tincidunt justo id nunc dignissim volutpat. Ut tempus euismod arcu, in aliquet libero placerat a. Aliquam ultrices enim justo, eget malesuada neque congue eget. Curabitur ac turpis lorem.</p>
+	    <!-- Adicione aqui o conteúdo da seção central -->
+	    
+	    <h:form>
+	    	
+	    	<p:toolbar styleClass="custom-toolbar">
+	    			<p:toolbarGroup>
+	    				<p:commandButton icon="pi pi-times"/>
+	    				<p:commandButton icon="pi pi-plus"/>
+	    			</p:toolbarGroup>
+	    			
+	    			<p:toolbarGroup style="margin-right: 20%">
+	    				<p:outputLabel value="fdskfsdkfjds"/>
+	    			</p:toolbarGroup>
+	    		</p:toolbar>
+	    	
+	    	
+	    	<div class="container">
+	    		
+	    		<p:panel style="font-size: 11px;">
+	    			
+	    			<div class="form-row" >
+				        <div class="form-column">
+				            <p:outputLabel for="inputNome" value="Nome:" />
+				            <p:inputText id="inputNome" class="custom-input" />
+				        </div>
+				        <div class="form-column">
+				            <p:outputLabel for="selectOpcao" value="Opção:" />
+				            <p:selectOneMenu id="selectOpcao" class="custom-select">
+				                <f:selectItem itemLabel="Opção 1" itemValue="1" />
+				                <f:selectItem itemLabel="Opção 2" itemValue="2" />
+				            </p:selectOneMenu>
+				        </div>
+				        <div class="form-column">
+				            <p:outputLabel for="radioOpcao" value="Escolha uma opção:" />
+				            <p:selectOneRadio id="radioOpcao" class="custom-radio">
+				                <f:selectItem itemLabel="Opção A" itemValue="A" />
+				                <f:selectItem itemLabel="Opção B" itemValue="B" />
+				            </p:selectOneRadio>
+				        </div>
+				    </div>
+				    <div class="form-row">
+				        <div class="form-column">
+				            <p:outputLabel for="inputComentario" value="Comentário:" />
+				            <p:inputTextarea id="inputComentario" class="custom-textarea" rows="4" />
+				        </div>
+				        <div class="form-column">
+				            <p:outputLabel for="outputPanel" value="Painel de Saída:" />
+				            <p:outputPanel id="outputPanel" class="custom-output-panel">
+				                Saída de Texto
+				            </p:outputPanel>
+				        </div>
+				        <div class="form-column">
+				            <p:outputLabel for="panel" value="Painel de Entrada:" />
+				            <p:panel id="panel" class="custom-panel">
+				                Entrada de Texto
+				            </p:panel>
+				        </div>
+				    </div>
+				    <div class="form-row">
+				        <div class="form-column">
+				        	<p:outputLabel/>
+				        	<p:outputLabel/>
+				            <!-- <p:outputLabel for="dataTable" value="Tabela de Dados:" />
+				            <p:dataTable id="dataTable" var="car" value="#{tableBean.cars}" class="custom-datatable">
+				                <p:column headerText="ID" style="text-align: left">
+				                    <h:outputText value="#{car.id}" />
+				                </p:column>
+				                <p:column headerText="Model"  style="text-align: left">
+				                    <h:outputText value="#{car.model}" />
+				                </p:column>
+				                <p:column headerText="Year"  style="text-align: left">
+				                    <h:outputText value="#{car.year}" />
+				                </p:column>
+				            </p:dataTable> -->
+				        </div>
+				        <div class="form-column">
+				            <p:commandButton value="Enviar" class="custom-button" style="color: blue"/>
+				        </div>
+				        <div class="form-column">
+				            <p:commandButton value="Cancelar" class="custom-button" style="color: brown"/>
+				        </div>
+				    </div>
+	    			
+	    		</p:panel>
+	    		
+	    		<p:dataTable id="dataTable" var="car" value="#{tableBean.cars}" class="custom-datatable">
+				                <p:column headerText="ID" style="text-align: left">
+				                    <h:outputText value="#{car.id}" />
+				                </p:column>
+				                <p:column headerText="Model"  style="text-align: left">
+				                    <h:outputText value="#{car.model}" />
+				                </p:column>
+				                <p:column headerText="Year"  style="text-align: left">
+				                    <h:outputText value="#{car.year}" />
+				                </p:column>
+				            </p:dataTable>
+	    		
+	    		
+	    	</div>
+	    	
+	    	
+	    	
+		</h:form>
+	    
+	</div>
+	
+	<div id="base">
+		<div class="form-row">
+			<div class="form-column">
+				Secção base
+			</div>
+			<div class="form-column">
+				Olá usario...
+			</div>
+		</div>
+	</div>	
+	
+</h:body> 
+</html>

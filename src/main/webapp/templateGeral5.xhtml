@@ -1,0 +1,491 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+
+<h:head>
+
+	<!-- meta tags para o controle de cache -->
+	<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    
+    <title> #{isController.tituloTemplate()} </title>
+    <link rel="stylesheet" href="css/templateTituloPagina.css"/>
+    
+    
+    <script type="text/javascript">
+	    PrimeFaces.locales ['de'] = {
+	        closeText: 'Fechar',
+	        prevText: 'Anterior',
+	        nextText: 'Seguinte',
+	        monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+	        monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+	        dayNames: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+	        dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+	        dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+	        weekHeader: 'Semana',
+	        firstDay: 1,
+	        isRTL: false,
+	        showMonthAfterYear: false,
+	        yearSuffix: '',
+	        timeOnlyTitle: 'Apenas hora',
+	        timeText: 'Tempo',
+	        hourText: 'Hora',
+	        minuteText: 'Minuto',
+	        secondText: 'Segundo',
+	        currentText: 'Data actual',
+	        ampm: false,
+	        month: 'Mês',
+	        week: 'Semana',
+	        day: 'Dia',
+	        allDayText: 'Dia inteiro'
+	    };
+	    
+	    window.onload = window.history.forward(0);
+	    	    
+	</script>
+	
+	<style>
+	  html,body {
+	    font-family: Arial, Helvetica, sans-serif;
+	    font-size: 11px;
+	    height: 100%;
+	    margin: 0;
+	    padding: 0;
+	  }
+	  
+	  .table {
+	    display: table;
+	    table-layout: auto;
+	    width: 100%; /* Definir a largura da tabela como 100% */
+	  }
+	  
+	  .table td {
+	      padding: 2px; 
+	      font-size: 11px;
+	   }
+	  
+	  .topo {
+	    position: absolute;
+	    top: 0;
+	    left: 0; /* Corrigido para adicionar 'px' */
+	    font-size: 11px;
+	    width: 100%; /* Definir a largura como 100% */
+	    text-align: center; /* Centralizar o texto horizontalmente */
+	    background-color: white;
+	  }
+	  
+	  .meio {
+	    position: absolute;
+	    top: 15%; /* Alterado para uma porcentagem para ser mais responsivo */
+	    width: 100%; /* Definir a largura como 100% */
+	    font-size: 12px;
+	  }
+	  
+	  .base {
+	    position: absolute;
+	    background-color: white;
+	    bottom: 0;
+	    color: gray;
+	    font-size: 10px;
+	    font-family: sans-serif;
+	    width: 100%; /* Definir a largura como 100% */
+	    text-align: center; /* Centralizar o texto horizontalmente */
+	    border-top: 1px solid #ccc; /*border-top: 1px solid #ccc;*/
+	  }
+	  
+	  .tdTituloBase {
+	    font-size: 9px;
+	  }
+	  
+	  
+	  /* Layout do formulário */
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        
+        .form-column {
+            flex: 1 1 30%; /* Cresce e encolhe com o tamanho da tela */
+            margin-right: 10px;
+            margin-bottom: 10px; text-align: center; background-color: gray;               
+        }
+        
+        .form-column:last-child {
+            margin-right: 0;
+        }
+        
+        /* Estilo de div container */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 90%; /* Ajuste conforme necessário */
+            margin: 0 auto; /* Centralizar o conteúdo */
+        }
+        
+        /* Estilo dos inputs */
+        .custom-input,
+        .custom-textarea{
+            width: 100%;
+		    border: 1px solid #ccc;
+		    border-radius: 4px;
+		    font-size: 11px;
+        }
+        
+        
+        .custom-select{
+        	width: 100%;
+        	border: 1px solid #ccc;
+        	border-radius: 4px;
+        	font-size: 11px;
+        }
+        
+
+        /* Estilo dos radio buttons */
+        .custom-radio {
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        /* Estilo dos botões */
+        .custom-button {
+            width: 100%; 
+            cursor: pointer;
+            transition: background-color 0.3s;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+
+        .custom-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilo do dataTable */
+        .custom-datatable {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+            font-size: 11px;
+        }
+
+        .custom-toolbar{
+        	
+        	width: 90%;
+        	margin: 0 auto;
+        	
+        }
+        
+        /*label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }*/
+	  
+	  
+	  
+	  
+	  
+	  @media only screen and (max-width: 768px) {
+	    
+	    /* Estilos para telas menores (tablets e celulares) */
+	    .topo {
+	      font-size: 10px;
+	    }
+	    .meio {
+	      top: 25%; /* Ajuste para uma porcentagem maior em telas menores */
+	      font-size: 10px;
+	    }
+	    .base {
+	      font-size: 7px;
+	    }
+	    .tdTituloBase {
+	      font-size: 8px;
+	    }
+	    
+	    .form-column {
+           flex: 1 1 100%; /* Em telas menores, ocupa 100% da largura */
+           margin-right: 0;
+        }
+        
+        .table td {
+	      font-size: 8px;
+	   }
+	    
+	  }
+	</style>
+	
+</h:head> 
+
+<body class="tabela" onload="window.history.forward(0);"> 
+	
+	
+	<center>
+		
+		<!--     DIV DA TOPO ............................................... -->
+		<div class="topo"> 
+			
+			<h:form enctype="multipart/form-data">
+				
+				<p:growl id="mensagem" showDetail="true" life="2700"/>
+				
+				<!--     sessão inválida *************************************************** -->
+				<p:outputPanel rendered="#{uController.verificaUsuarioNaSessao() == false}">
+					<!-- nada  -->
+				</p:outputPanel>
+				<!-- fim sessão inválida *************************************************** -->
+				
+				
+				<!--     sessão válida ***************************************************** -->
+				<p:outputPanel rendered="#{uController.verificaUsuarioNaSessao() == true}">
+					
+					<!-- *** menu Usuário Administrador ***************************** -->
+					<p:menubar rendered="#{uController.verificaPerfilUsuarioAdm() == true}" style="font-size: 13px">
+												
+						<c:forEach items="#{uController.func36PegaItensMenuAdm(3, null)}" var="item3">
+								    		
+							<p:menuitem value="#{item3.descricao}" url="#{item3.caminhoFicheiroXhtml}" icon="#{item3.icone}" rendered="#{item3.caminhoFicheiroXhtml != null}"/>								    		
+							<p:submenu label="#{item3.descricao}" icon="#{item3.icone}" rendered="#{item3.caminhoFicheiroXhtml == null}">
+								    			
+								<c:forEach items="#{uController.func36PegaItensMenuAdm(6, item3.codigo)}" var="item6">
+								    				
+									<p:menuitem value="#{item6.descricao}" url="#{item6.caminhoFicheiroXhtml}" icon="#{item6.icone}" rendered="#{item6.caminhoFicheiroXhtml != null}"/>
+								    <p:submenu label="#{item6.descricao}" icon="#{item6.icone}" rendered="#{item6.caminhoFicheiroXhtml == null}">
+								    					
+								    	<c:forEach items="#{uController.func36PegaItensMenuAdm(9, item6.codigo)}" var="item9">
+								    						
+								    		<p:menuitem value="#{item9.descricao}" url="#{item9.caminhoFicheiroXhtml}" icon="#{item9.icone}" rendered="#{item9.caminhoFicheiroXhtml != null}"/>
+								    		<p:submenu label="#{item9.descricao}" icon="#{item9.icone}" rendered="#{item9.caminhoFicheiroXhtml == null}">
+								    							
+								    			<c:forEach items="#{uController.func36PegaItensMenuAdm(12, item9.codigo)}" var="item12">
+								    								
+								    				<p:menuitem value="#{item12.descricao}" url="#{item12.caminhoFicheiroXhtml}" icon="#{item12.icone}" rendered="#{item12.caminhoFicheiroXhtml != null}"/>
+								    				<p:submenu label="#{item12.descricao}" icon="#{item12.icone}" rendered="#{item12.caminhoFicheiroXhtml == null}">
+								    									
+								    					<c:forEach items="#{uController.func36PegaItensMenuAdm(15, item12.codigo)}" var="item15">
+								    						<p:menuitem value="#{item15.descricao}" url="#{item15.caminhoFicheiroXhtml}" icon="#{item15.icone}" rendered="#{item15.caminhoFicheiroXhtml != null}"/>
+								    					</c:forEach>
+								    									
+								    				</p:submenu>
+								    								
+								    			</c:forEach>
+								    							
+								    		</p:submenu>
+								    						
+								    	</c:forEach>
+								    					
+								    </p:submenu>
+								    				
+								</c:forEach>
+								    			
+							</p:submenu>
+								    		
+						</c:forEach> 
+						
+						<f:facet name="options">
+							<p:commandButton value="Sair" 
+							    			 action="#{uController.logout2()}"
+											 ajax="false" 
+								    		 icon="pi pi-sign-out" 
+								    		 title="Sair do sistema" 
+								    		 style="width: 70px"
+								    		 update="form"/>
+						</f:facet>
+						
+					</p:menubar> 
+					<!-- fim menu Usuário Administrador ***************************** -->
+					
+					
+					<!-- *** menu Outros Usuários *********************************** -->
+					<p:menubar rendered="#{uController.verificaPerfilUsuarioAdm() == false}" style="font-size: 13px">
+								    	
+								    	<p:menuitem value="HOME" url="home.xhtml" icon="pi pi-home" style="width: 80px;"/>
+								    	
+								    	<c:forEach items="#{uController.func37PegaItensMenuUsuario(3, null, uController.pegaUsuarioLogado().grupo)}" var="item3">
+								    		
+								    		<p:menuitem value="#{item3.descricao}" url="#{item3.caminhoFicheiroXhtml}" icon="#{item3.icone}" rendered="#{item3.caminhoFicheiroXhtml != null}"/>								    		
+								    		<p:submenu label="#{item3.descricao}" icon="#{item3.icone}" rendered="#{item3.caminhoFicheiroXhtml == null}">
+								    			
+								    			<c:forEach items="#{uController.func37PegaItensMenuUsuario(6, item3.codigo, uController.pegaUsuarioLogado().grupo)}" var="item6">
+								    				
+								    				<p:menuitem value="#{item6.descricao}" url="#{item6.caminhoFicheiroXhtml}" icon="#{item6.icone}" rendered="#{item6.caminhoFicheiroXhtml != null}"/>
+								    				<p:submenu label="#{item6.descricao}" icon="#{item6.icone}" rendered="#{item6.caminhoFicheiroXhtml == null}">
+								    					
+								    					<c:forEach items="#{uController.func37PegaItensMenuUsuario(9, item6.codigo, uController.pegaUsuarioLogado().grupo)}" var="item9">
+								    						
+								    						<p:menuitem value="#{item9.descricao}" url="#{item9.caminhoFicheiroXhtml}" icon="#{item9.icone}" rendered="#{item9.caminhoFicheiroXhtml != null}"/>
+								    						<p:submenu label="#{item9.descricao}" icon="#{item9.icone}" rendered="#{item9.caminhoFicheiroXhtml == null}">
+								    							
+								    							<c:forEach items="#{uController.func37PegaItensMenuUsuario(12, item9.codigo, uController.pegaUsuarioLogado().grupo)}" var="item12">
+								    								
+								    								<p:menuitem value="#{item12.descricao}" url="#{item12.caminhoFicheiroXhtml}" icon="#{item12.icone}" rendered="#{item12.caminhoFicheiroXhtml != null}"/>
+								    								<p:submenu label="#{item12.descricao}" icon="#{item12.icone}" rendered="#{item12.caminhoFicheiroXhtml == null}">
+								    									
+								    									<c:forEach items="#{uController.func37PegaItensMenuUsuario(15, item12.codigo, uController.pegaUsuarioLogado().grupo)}" var="item15">
+								    										<p:menuitem value="#{item15.descricao}" url="#{item15.caminhoFicheiroXhtml}" icon="#{item15.icone}" rendered="#{item15.caminhoFicheiroXhtml != null}"/>
+								    									</c:forEach>
+								    									
+								    								</p:submenu>
+								    								
+								    							</c:forEach>
+								    							
+								    						</p:submenu>
+								    						
+								    					</c:forEach>
+								    					
+								    				</p:submenu>
+								    				
+								    			</c:forEach>
+								    			
+								    		</p:submenu>
+								    		
+								    	</c:forEach>
+								    	
+								    	
+								    	<f:facet name="options">
+							                <p:commandButton value="Sair" 
+															 action="#{uController.logout2()}"
+											                 ajax="false" 
+								    				         icon="pi pi-sign-out" 
+								    				         title="Sair do sistema" 
+								    				         style="width: 70px"
+								    				         update="form"/>
+							            </f:facet>
+								    	
+					</p:menubar>
+					<!-- fim menu Outros Usuários *********************************** -->
+					
+				</p:outputPanel>
+				<!-- fim sessão válida ***************************************************** -->
+				
+			</h:form>		
+			
+		</div>
+		<!-- FIM DIV DA TOPO ............................................... -->
+		
+		
+		
+		
+		
+		
+		<!--     DIV DA CENTRO ............................................. -->
+		<div id="centro">
+			
+			<h:form id="form" enctype="multipart/form-data">
+				
+				<p:growl id="mensagem" showDetail="true" life="2700"/>
+				
+				<!--     sessão inválida *************************************************** -->
+				<p:outputPanel rendered="#{uController.verificaUsuarioNaSessao() == false}">
+					
+					<p:outputPanel style="margin-top: 50%">
+						
+						<table border="0">
+							<tr>
+								<td align="center">
+									<p:outputLabel value="A sua sessão expirou. Faça o login." 
+									               style="color: red; font-size: 12px"/>
+								</td>
+							</tr>
+							<tr>
+								<td align="center">
+									<p:commandButton id="login"
+													 value="Login" 
+													 action="#{uController.logout3()}"
+													 update="form"																	 
+													 title="Clique para efectuar o login"
+													 style="width: 80px; font-size: 12px; font-weight: bold;" 
+													 icon="pi pi-sign-in"/>
+								</td>
+							</tr>
+						</table>
+						
+					</p:outputPanel>
+					
+				</p:outputPanel>
+				<!-- fim sessão inválida *************************************************** -->
+				
+				
+				
+				<!--     sessão válida ***************************************************** -->
+				<p:outputPanel rendered="#{uController.verificaUsuarioNaSessao() == true}">
+					
+					<table border="0" cellpadding="0" cellspacing="0">
+						<tr>
+			        		<td align="center"> 
+			        			<ui:insert/>		        			
+			        		</td>			        		
+			        	</tr>
+			        	<tr>
+			        		<td align="center"> 
+			        			<p:ajaxStatus id="processamentoStatus">
+								    <f:facet name="start">
+								        <!-- Aqui você pode adicionar código HTML ou PrimeFaces para mostrar o indicador de processamento global -->
+								        <img src="loading.gif" width="30px" height="30px" style="margin-top: 2px"/>
+								    </f:facet>
+								    <f:facet name="complete">
+								        <!-- Aqui você pode adicionar código HTML ou PrimeFaces para esconder o indicador de processamento global após a conclusão da ação do botão -->
+								    </f:facet>
+								</p:ajaxStatus>	        			
+			        		</td>
+			        	</tr>
+					</table>
+					
+				</p:outputPanel>
+				<!-- fim sessão válida ***************************************************** -->
+				
+			</h:form>
+			
+		</div>
+		<!-- FIM DIV DA CENTRO ............................................. -->
+		
+		
+	</center>
+	
+	
+	
+	
+	
+	<!-- DIV DA BASE ................................................... -->
+	<div class="base">
+		
+		<!--     sessão inválida *************************************************** -->
+		<p:outputPanel rendered="#{uController.verificaUsuarioNaSessao() == false}">
+			<table class="table" border="0">
+				<tr>
+					<td width="30%"></td>
+					<td width="70%"></td>				
+				</tr>
+			</table>
+		</p:outputPanel>
+		<!-- fim sessão inválida *************************************************** -->
+		
+		
+		
+		<!--     sessão válida ***************************************************** -->
+		<p:outputPanel rendered="#{uController.verificaUsuarioNaSessao() == true}">
+			<p:panel>
+				<table class="table" border="0">
+					<tr>
+						<td width="40%" align="right">
+							<p:outputLabel value="#{isController.tituloSistemaBase()}" style="margin-right: 60px"/>
+						</td>
+						<td width="60%" align="left">
+							<p:outputLabel value="#{uController.pegarNomeclaturaCompletaUsuario()}" />
+						</td>				
+					</tr>
+				</table>
+			</p:panel>
+		</p:outputPanel>
+		<!-- fim sessão válida ***************************************************** -->	
+		
+	</div>
+	<!-- FIM DIV DA BASE ............................................... -->
+	
+</body> 
+</html>

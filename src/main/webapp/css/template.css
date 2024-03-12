@@ -1,0 +1,80 @@
+@charset "UTF-8";
+
+			html,body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 12px;
+			    height: 80%;
+			    min-height: 90% !important;
+			}
+			
+			.table {
+			    display: table;
+			    table-layout: auto;
+			}
+			
+			
+			.topo { 
+			    position: absolute;
+			    top: 5px;			    
+			    left: 10;			    	    
+			}
+			
+			.topo5 { 
+			    position: absolute;
+			    top: 1px; /*top: 5px;*/			    
+			    left: 10;	
+			    font-size: 12px;		    	    
+			}
+			
+			.meio { 
+			    position: absolute;
+			    top:100px;			    
+			    left: 10;			    	    
+			}
+			
+			.meio2 { 
+			    position: absolute;
+			    top:200px; 			    		    	    
+			}
+			
+			
+			.meio5 { 
+			    position: absolute;
+			    top:65px; /*top:75px;*/
+			    font-size: 12px;			    		    	    
+			}
+			
+			
+			
+			
+			
+			.tabelaAlinhadaCentro { 
+			    margin-left: auto;
+  				margin-right: auto;	    		    	    
+			}
+			
+			.base { 
+			    position: absolute; 
+			    bottom: 0; 
+			    left: 10; 
+			    color: gray;   
+			    font-size: 10px;	    
+			}	
+			
+			.base2 { 
+			    position: absolute; 
+			    bottom: 0; 			    
+			    color: gray;   
+			    font-size: 8px;	  
+			    font-family: sans-serif;  
+			}	
+			
+			.tdTituloBase{
+				font-size: 9px;
+			}
+			
+			.tituloPagina{
+				margin-top: 50px;
+				margin-bottom: 6px;
+				font-weight: bold;
+			}

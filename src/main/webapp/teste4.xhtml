@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+	
+	<title>Menu4</title>
+	
+	<style>
+        /* Estilos gerais */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* Estilo do topo */
+        .topo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 42px;
+            background-color: yellow;
+            text-align: center;
+            line-height: 50px;
+            font-size: 11px;
+        }
+
+        /* Estilo do menu vertical */
+        .menu-vertical {
+            position: absolute;
+            top: 43px;
+            left: 0;
+            width: 200px;
+            height: calc(100% - 69px);/*height: calc(100% - 300px);*/
+            background-color: white; /*background-color: #ccc;*/
+            font-size: 11px;
+            /*border-right: 1px solid #ccc;*/
+        }
+
+        /* Estilo do conteúdo */
+        .conteudo {
+            position: absolute;
+            top: 43px;
+            left: 202px; /* Largura do menu vertical */
+            width: calc(100% - 205px);
+            height: calc(100% - 71px);
+            /*width: calc(100% - 50px);
+            height: calc(100% - 75px);*/ /* Altura ajustada */            
+            padding: 1px; /*20px*/
+            font-size: 11px;
+            background-color: orange;
+        }
+
+        /* Estilo da base */
+        .base {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 25px;
+            background-color: green;
+            text-align: center;
+            line-height: 25px;
+            color: red;
+            font-size: 9px;
+            font-family: sans-serif;
+        }
+        
+        /* Layout do formulário */
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        
+        .form-column {
+            flex: 1 1 30%; /* Cresce e encolhe com o tamanho da tela */
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        
+        /* Layout do formulário para base*/
+        .form-row-base {
+            display: flex;
+            flex-wrap: wrap;           
+        }
+        
+        .form-column-base {
+            flex: 1 1 30%; /* Cresce e encolhe com o tamanho da tela */
+            margin-right: 10px;                   
+        }
+        
+        .form-column:last-child {
+            margin-right: 0;
+        }
+        
+        /* Estilo de div container */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 90%; /* Ajuste conforme necessário */
+            margin: 0 auto; /* Centralizar o conteúdo */
+        }
+
+        /* Estilo responsivo */
+        @media only screen and (max-width: 768px) {
+            
+            .topo {
+                font-size: 10px;
+            }
+            .menu-vertical {
+                width: 100%;
+                height: auto;
+                top: 50px;
+            }
+            .conteudo {
+                left: 0;
+                width: 100%;
+                top: 75px;
+                width: calc(100% - 4px);
+                height: calc(100% - 110px); /*height: calc(100% - 75px);*/
+            }
+            .base {
+                font-size: 7px;
+            }
+            
+            .form-column {
+                flex: 1 1 100%; /* Em telas menores, ocupa 100% da largura */
+                margin-right: 0;
+            }                       
+            
+        }
+    </style>
+	
+</h:head> 
+<h:body> 
+	
+	<div class="topo">Topo</div>
+    <div class="menu-vertical">Menu Vertical</div>
+    <div class="conteudo">
+        Conteúdo
+        <!-- Seu conteúdo aqui -->
+    </div>
+    <div class="base">
+    	
+    	<div class="form-row-base">
+			<div class="form-column-base">
+				Secção base
+			</div>
+			<div class="form-column-base">
+				Olá usario...
+			</div>
+		</div>
+    	
+    </div>
+	
+	<!-- <div class="topo">		
+		<p:menubar>
+            <p:submenu label="Menu"  style="margin-left: 14%">
+                <p:menuitem value="Página 1" url="#" />
+                <p:menuitem value="Página 2" url="#" />
+                <p:menuitem value="Página 3" url="#" />
+                <p:menuitem value="Página 4" url="#" />
+            </p:submenu>
+            
+            <p:submenu label="Menu2">
+                <p:menuitem value="Página 1" url="#" />
+                <p:menuitem value="Página 2" url="#" />
+                <p:menuitem value="Página 3" url="#" />
+                <p:menuitem value="Página 4" url="#" />
+            </p:submenu>
+            
+            <p:submenu label="Menu3">
+                <p:menuitem value="Página 1" url="#" />
+                <p:menuitem value="Página 2" url="#" />
+                <p:menuitem value="Página 3" url="#" />
+                <p:menuitem value="Página 4" url="#" />
+            </p:submenu>
+            
+            <p:submenu label="Menu4">
+                <p:menuitem value="Página 1" url="#" />
+                <p:menuitem value="Página 2" url="#" />
+                <p:menuitem value="Página 3" url="#" />
+                <p:menuitem value="Página 4" url="#" />
+            </p:submenu>
+            
+            <p:submenu label="Menu">
+                <p:menuitem value="Página 1" url="#" />
+                <p:menuitem value="Página 2" url="#" />
+                <p:menuitem value="Página 3" url="#" />
+                <p:menuitem value="Página 4" url="#" />
+            </p:submenu>
+            
+            <f:facet name="options">
+							                <p:commandButton value="Sair" 
+															 ajax="false" 
+								    				         icon="pi pi-sign-out" 
+								    				         title="Sair do sistema" 
+								    				         style="width: 70px"
+								    				         update="form"/>
+			</f:facet>
+            
+        </p:menubar>	
+	</div>
+	
+    
+    <div class="menu2">
+    	<p:menu style="border: 0; background-color: white; width: 190px">
+            <p:submenu label="Options">
+                <p:menuitem value="Save (Non-Ajax)" icon="pi pi-save"/>
+                <p:menuitem value="Update" icon="pi pi-refresh"/>
+                <p:menuitem value="Delete" icon="pi pi-times"/>
+            </p:submenu> 
+            
+            <p:submenu label="Options 2">
+                <p:menuitem value="Save (Non-Ajax)" icon="pi pi-save"/>
+                <p:menuitem value="Update" icon="pi pi-refresh"/>
+                <p:menuitem value="Delete" icon="pi pi-times"/>
+                
+                <p:submenu label="Options 2.1">
+                	<p:menuitem value="Save (Non-Ajax)" icon="pi pi-save"/>
+                </p:submenu>
+                
+            </p:submenu>            
+        </p:menu>
+    </div>
+    <div class="centro">
+        centro
+    </div>
+    <div class="base">Base</div> -->
+	
+</h:body> 
+</html>

@@ -1,0 +1,683 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:decorate       
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="templateGeral.xhtml"> 
+
+	<h2>
+		<p:outputLabel value="SISTEMA / INTEGRANTES"/>
+	</h2>	
+	
+	<table border="0">
+		<tr>
+			
+			<td valign="top">				
+				<!-- ....LISTAGENS DE INTEGRANTE............................ -->
+				<table border="1" width="670px">
+					<tr><td valign="top">
+						
+						<!-- ....cabeçalho...................... -->
+						<p:toolbar>
+								
+								<p:toolbarGroup>
+									<p:commandButton action="#{iController.cancelarGeral()}"
+										  		     title="Cancelar novo/alteração de integrantes"
+										  		     update="form" 
+										  		     style="color: #800000;" 
+										  		     icon="pi pi-times" />
+											
+									<p:commandButton action="#{iController.novoRegistro()}"
+													 title="Novo integrante"
+													 disabled="#{iController.modoNovo == true or iController.modoEditar == true}" 
+													 update="form" 
+													 style="color: #347C17;" 
+													 icon="pi pi-plus" />
+								</p:toolbarGroup>
+								
+								<p:toolbarGroup align="right" style="margin-right: 35%">
+									<p:outputLabel>
+										<p:outputLabel value="LISTAGEM DE INTEGRANTES" />							
+									</p:outputLabel>
+								</p:toolbarGroup>								
+								
+						</p:toolbar>
+						<!-- fim cabeçalho...................... -->
+						
+						<!-- ....lista.......................... -->
+						<!-- fim lista.......................... -->
+						
+					</td></tr>
+				</table>
+				<!-- FIM LISTAGENS DE INTEGRANTE............................ -->				
+			</td>
+			
+			
+			
+			
+			<td valign="top">
+				<!-- ....ALT/DEL DE INTEGRANTE............................ -->
+				<p:outputPanel rendered="#{iController.modoNovo == true or iController.modoEditar == true}">
+				
+					<table border="0" width="670px">
+						<tr><td>
+						
+							<p:toolbar>
+								
+								<p:toolbarGroup>
+									<p:commandButton action="#{iController.cancelarGeral()}"
+										  		     title="Cancelar novo/alteração de integrantes"
+										  		     update="form" 
+										  		     style="color: #800000;" 
+										  		     icon="pi pi-times" />								
+								</p:toolbarGroup>
+								
+								<p:toolbarGroup style="margin-right: 42%" rendered="#{iController.modoNovo == true or iController.modoEditar == false}">
+									<p:outputLabel>
+										<p:outputLabel value="NOVO INTEGRANTE" style="color: #347C17;"/>							
+									</p:outputLabel>
+								</p:toolbarGroup>
+								
+								<p:toolbarGroup style="margin-left: 35%" rendered="#{iController.modoNovo == false or iController.modoEditar == true}">
+									<p:outputLabel>
+										<p:outputLabel value="ALTERAR/ELIMINAR INTEGRANTE #{iController.integrante.pessoa.nome}" style="color: #F88017;"/>							
+									</p:outputLabel>
+								</p:toolbarGroup>
+								
+							</p:toolbar>
+							
+							
+							
+							
+							<!-- ....novo integrante ................................. -->
+							<p:outputPanel rendered="#{iController.modoNovo == true}"  style="font-size: 11px">
+								
+								<p:panel>
+									<table border="0" width="100%">
+										<tr>
+											<td>
+												<p:inputTextarea id="nomeTXT" 
+													             value="#{iController.pessoa.nome}"
+													             cols="78"
+													             rows="1"
+													             maxlength="150"
+													             style="font-size: 15px; text-align: center; font-weight: bold;"
+													             placeholder="- NOME COMPLETO" 
+													             autoResize="false"/> 
+											</td>											
+										</tr>										
+									</table>
+								</p:panel>								
+								
+								
+								<center>
+									
+									<p:tabView>
+																				
+										<p:tab title="DADOS PESSOAIS">
+											<table border="0" width="100%">												
+												<tr>
+													<td width="50%" valign="top">
+														
+														<!-- ....lado esquerdo -->
+														<table border="0" width="100%">
+															<tr>
+																<th align="right" width="35%" valign="top">FILIAÇÃO:</th>
+																<td>
+																	<p:inputTextarea id="filiacaoTXT" 
+																	                 value="#{iController.pessoa.filiacao}"
+																	                 cols="36"
+																	                 rows="2"
+																	                 maxlength="200"
+																	                 autoResize="false"
+																	                 placeholder="-"/>
+																</td>
+															</tr>
+															<tr>
+																<th align="right">Nº BILHETE IDENT.:</th>
+																<td>
+																	<p:inputText id="biTXT"
+																	             value="#{iController.pessoa.numeroBilheteIdentidade}"
+																	             maxlength="15"
+																	             placeholder="-"
+																	             style="width: 95%"/>
+																</td>
+															</tr>
+															<tr>
+																<th align="right">DT NASCIMENTO:</th>
+																<td>
+																	<p:calendar id="dataNacimentoTXT" 
+												  				                value="#{iController.dataNascimento}"  
+												  				                locale="de" 
+												  				                navigator="true" 
+												  				                mask="true" 
+												  				                size="35" 
+												  				                maxlength="10" 
+											                                    pattern="dd/MM/yyyy"
+											                                    placeholder="-">
+											                        	
+											                        	<p:ajax event="dateSelect" 
+											                        	        update="idadePainel"/>
+											                        	
+											                        </p:calendar>
+																</td>
+															</tr>
+															<tr>
+																<th align="right">IDADE:</th>
+																<td>
+																	<p:outputPanel id="idadePainel">
+																		<p:inputText value="#{iController.func007PegaIdadecomDateUTIL(iController.dataNascimento)}"
+																	                 readonly="true"
+																	                 style="width: 95%"/>
+																	</p:outputPanel>
+																</td>
+															</tr>
+															<tr>
+																<th align="right">SEXO:</th>
+																<td>
+																	<p:selectOneRadio id="sexoRB" 
+																	                  value="#{iController.pessoa.sexo}"
+																	                  layout="grid" 
+																	                  columns="3">
+																	    <f:selectItem itemLabel="Masculino" itemValue="M"/>
+															            <f:selectItem itemLabel="Feminino"  itemValue="F"/>	
+															            <f:ajax event="change" 
+																		        listener="#{iController.func008OrganizaTitulos(iController.pessoa.sexo)}" 
+																		        render="tituloPainel"/>										            
+															        </p:selectOneRadio>
+																</td>
+															</tr>
+															<tr>
+																<th align="right" valign="top">ESTADO CIVÍL:</th>
+																<td>
+																	<p:selectOneRadio id="estadoCivilRB" 
+																	                  value="#{iController.pessoa.estadoCivil}"
+																	                  layout="grid" 
+																	                  columns="2">
+																	    <f:selectItem itemLabel="-" itemValue="#{null}"/>
+															            <f:selectItem itemLabel="Solteiro"   itemValue="solteiro"/>
+															            <f:selectItem itemLabel="Casado"     itemValue="casado"/>
+															            <f:selectItem itemLabel="Separado"   itemValue="separado"/>
+															            <f:selectItem itemLabel="Divorciado" itemValue="divorciado"/>
+															            <f:selectItem itemLabel="Viúvo"      itemValue="viuvo"/>
+															        </p:selectOneRadio>
+																</td>
+															</tr>
+															<tr>
+																<th align="right" valign="top">NATURAL DE:</th>
+																<td>
+																	<p:selectOneListbox id="naturalidadeLBX" 
+																	                    value="#{iController.pessoa.naturalidade}" 
+																	                    converter="omnifaces.SelectItemsConverter" 
+									                                                    var="m" 
+									                                                    filter="true" 
+									                                                    filterMatchMode="contains" 
+									                                                    filterNormalize="true"
+									                                                    scrollHeight="50" 
+									                                                    style="width: 97%;">
+									                                	
+									                                	<f:selectItems value="#{iController.naturalidadesLista}" 
+									                                	               var="naturalidade" 
+									                                	               itemLabel="#{naturalidade.nome}" 
+									                                	               itemValue="#{naturalidade}"/>
+									                                	<p:column>
+														                    <h:outputText value="#{m.nome}"/>
+														                </p:column>
+														                
+														                <f:ajax event="change" 
+														                        render="provinciaPainel" 
+														                        listener="#{iController.func001PegaProvincia(iController.pessoa.naturalidade)}"/>
+									                                	
+									                                </p:selectOneListbox>
+																</td>
+															</tr>
+															<tr>
+																<th align="right">PROVÍNCIA DE:</th>
+																<td>
+																	<p:outputPanel id="provinciaPainel">
+																		
+																		<p:selectOneMenu id="provinciaCB" 
+																				         value="#{iController.pessoa.provincia}" 
+																				         converter="omnifaces.SelectItemsConverter" 
+																  				         style="width: 88.5%; font-size: 11px;">
+																  			
+																  			<f:selectItem itemLabel="-" itemValue="#{null}"/>	     
+																			<f:selectItems value="#{iController.provinciasLista}" 
+																					       var="p" 
+																					       itemLabel="#{p.nome}"/>															
+																		</p:selectOneMenu>
+																		
+																	</p:outputPanel>
+																</td>
+															</tr>
+															<!-- <tr>
+																<th align="right"></th>
+																<td></td>
+															</tr> -->
+														</table>
+														<!-- fim lado esquerdo -->
+														
+													</td>
+													<td width="50%" valign="top">
+													
+														<!-- ....lado direito -->
+														<table border="0" width="100%">
+															<tr>
+																<th align="right" width="35%" valign="top">RESIDÊNCIA:</th>
+																<td>
+																	<p:inputTextarea id="residenciaTXT" 
+																	                 value="#{iController.pessoa.residencia}"
+																	                 cols="40"
+																	                 rows="4"
+																	                 maxlength="350" 
+																	                 autoResize="false"
+																	                 placeholder="-"/>
+																</td>
+															</tr>
+															<tr>
+																<th align="right">EMAIL:</th>
+																<td>
+																	<p:inputText id="emailTXT"
+																	             value="#{iController.pessoa.correioElectronico}"
+																	             maxlength="100"
+																	             placeholder="-"
+																	             style="width: 95%"/>
+																</td>
+															</tr>
+															<tr>
+																<th align="right"></th>
+																<td>
+																	<p:inputText id="emailAlternativoTXT"
+																	             value="#{iController.pessoa.correioElectronicoAlternativo}"
+																	             maxlength="100"
+																	             placeholder="-"
+																	             style="width: 95%"/>
+																</td>
+															</tr>
+															<tr>
+																<th align="right">TELEFONE:</th>
+																<td>
+																	<p:inputText id="telefoneTXT"
+																	             value="#{iController.pessoa.telefone}"
+																	             maxlength="50"
+																	             placeholder="-"
+																	             style="width: 95%"/>
+																</td>
+															</tr>
+															<tr>
+																<th align="right"></th>
+																<td>
+																	<p:inputText id="telefoneAlternativoTXT"
+																	             value="#{iController.pessoa.telefoneAlternativo}"
+																	             maxlength="50"
+																	             placeholder="-"
+																	             style="width: 95%"/>
+																</td>
+															</tr>
+															<tr>
+																<th align="right" valign="top">OUTROS CONTACTOS:</th>
+																<td>
+																	<p:inputTextarea id="outrosContactosTXT" 
+																	                 value="#{iController.pessoa.outrosContactos}"
+																	                 cols="40"
+																	                 rows="3"
+																	                 maxlength="250"
+																	                 autoResize="false"
+																	                 placeholder="-"/>
+																</td>
+															</tr>
+															<tr>
+																<th align="right" valign="top">OBSERVAÇÕES:</th>
+																<td>
+																<p:inputTextarea id="obsTXT" 
+																	             value="#{iController.pessoa.obs}"
+																	             cols="40"
+																	             rows="7"
+																	             maxlength="350"
+																	             autoResize="false"
+																	             placeholder="-"/>
+																</td>
+															</tr>
+														</table>
+														<!-- fim lado direito -->
+														
+													</td>
+												</tr>
+												<!-- <tr>
+													<td width="50%"></td>
+													<td width="50%"></td>
+												</tr> -->									
+												
+											</table>
+										</p:tab>
+										
+										
+										
+										
+										<p:tab title="DADOS PROFISSIONAIS">
+											<table border="0" width="100%">												
+												<tr>
+													<td width="50%">
+														<!-- ....lado esquerdo -->
+														<table border="0" width="100%">
+															<tr>
+																<th align="right" width="35%">MATRICULA:</th>
+																<td>
+																	<p:inputText id="matriculaTXT"
+																	             value="#{iController.integrante.matricula}"
+																	             maxlength="20"
+																	             placeholder="-"
+																	             style="width: 95%"/>
+																</td>
+															</tr>
+															<tr>
+																<th align="right">DT ADMISSÃO:</th>
+																<td>
+																	<p:calendar id="dataAdmissaoTXT" 
+												  				                value="#{iController.dataAdmissao}"  
+												  				                locale="de" 
+												  				                navigator="true" 
+												  				                mask="true" 
+												  				                size="35" 
+												  				                maxlength="10" 
+											                                    pattern="dd/MM/yyyy"
+											                                    placeholder="-">
+											                        	
+											                        	<p:ajax event="dateSelect" 
+											                        	        update="tempoServicoPainel"/>
+											                        	
+											                        </p:calendar>
+																</td>
+															</tr>
+															<tr>
+																<th align="right">FUNÇÃO:</th>
+																<td>
+																	<p:selectOneMenu id="funcaoCB" 
+																	                 value="#{iController.integrante.funcao}"
+																				     converter="omnifaces.SelectItemsConverter" 
+																  				     style="width: 185px; font-size: 11px;">
+																  			
+																  			<f:selectItem itemLabel="-" itemValue="#{null}"/>
+																  			<f:selectItems value="#{iController.funcoesLista}" var="a" itemLabel="#{a.nome}"/>	     
+																																		
+																	</p:selectOneMenu>
+																</td>
+															</tr>															
+															<tr>
+																<th align="right">ÁREA:</th>
+																<td>
+																	<p:selectOneMenu id="areaCB" 
+																					 value="#{iController.integrante.area}"
+																				     converter="omnifaces.SelectItemsConverter" 
+																  				     style="width: 185px; font-size: 11px;">
+																  			
+																  			<f:selectItem itemLabel="-" itemValue="#{null}"/>
+																  			<f:selectItems value="#{iController.areasLista}" var="a" itemLabel="#{a.nome}"/>	     
+																																		
+																	</p:selectOneMenu>
+																</td>
+															</tr>
+															<tr>
+																<th align="right">HABIL. LITERARIAS:</th>
+																<td>
+																	<p:selectOneMenu id="habilitacaoLiterariaCB" 
+																				     value="#{iController.integrante.habilitacaoLiteraria}"
+																				     converter="omnifaces.SelectItemsConverter" 
+																  				     style="width: 185px; font-size: 11px;">
+																  			
+																  			<f:selectItem itemLabel="-" itemValue="#{null}"/>
+																  			<f:selectItems value="#{iController.habilitacoesLiteriariasLista}" var="a" itemLabel="#{a.nome}"/>	     
+																																		
+																	</p:selectOneMenu>
+																</td>
+															</tr>
+															<tr>
+																<th align="right">CARREIRA:</th>
+																<td>
+																	<p:selectOneMenu id="carreiraCB" 
+																					 value="#{iController.integrante.carreira}"
+																				     converter="omnifaces.SelectItemsConverter" 
+																  				     style="width: 185px; font-size: 11px;">
+																  			
+																  			<f:selectItem itemLabel="-" itemValue="#{null}"/>	 
+																  			<f:selectItems value="#{iController.carreirasLista}" var="a" itemLabel="#{a.nome}"/>																  			    
+																			
+																			<f:ajax event="change" 
+														                        	listener="#{iController.func009OrganizaCategoria(iController.integrante.carreira)}"
+														                        	render="categoriaPainel" />
+																																	
+																	</p:selectOneMenu>
+																</td>
+															</tr>															
+														</table>
+														<!-- fim lado esquerdo -->
+													</td>
+													
+													
+													
+													<td width="50%" valign="top">
+														<!-- ....lado direito -->
+														<table border="0" width="100%">
+															<tr>
+																<th align="right" width="35%">Nº AGENTE:</th>
+																<td>
+																	<p:inputText id="numeroAgenteTXT"
+																	             value="#{iController.integrante.numeroAgente}"
+																	             maxlength="30"
+																	             placeholder="-"
+																	             style="width: 95%">
+																		<p:keyFilter mask="num" />
+																	</p:inputText>
+																</td>
+															</tr>
+															<tr>
+																<th align="right">TEMPO SERVIÇO:</th>
+																<td>
+																	<p:outputPanel id="tempoServicoPainel">
+																		<p:inputText value="#{iController.func007PegaIdadecomDateUTIL(iController.dataAdmissao)}"
+																	                 readonly="true"
+																	                 style="width: 95%"/>
+																	</p:outputPanel>
+																</td>
+															</tr>
+															<tr>
+																<th align="right"> TÍTULO:</th>
+																<td>
+																	<p:outputPanel id="tituloPainel">
+																		
+																		<p:selectOneMenu id="tituloCB" 
+																					     value="#{iController.integrante.titulo}"
+																					     converter="omnifaces.SelectItemsConverter" 
+																	  				     style="width: 185px; font-size: 11px;">
+																	  			
+																	  			<f:selectItem itemLabel="-" itemValue="#{null}"/>	
+																	  			<f:selectItems value="#{iController.titulosLista}" var="a" itemLabel="#{a.abreviada} - #{a.nome}"/>     
+																																			
+																		</p:selectOneMenu>
+																		
+																	</p:outputPanel>										
+																</td>
+															</tr>															
+															<tr>
+																<th align="right">ÁREA ESPECIF:</th>
+																<td>
+																	<p:outputPanel id="areaEspecificaPainel">																		
+																		<p:selectOneMenu id="areaEspecificaCB" 
+																					     value="#{iController.integrante.areaEspecifica}"
+																					     converter="omnifaces.SelectItemsConverter" 
+																	  				     style="width: 185px; font-size: 11px;">
+																	  			
+																	  			<f:selectItem itemLabel="-" itemValue="#{null}"/>
+																	  			<f:selectItems value="#{iController.areaEspecificasLista}" var="a" itemLabel="#{a.nome}"/>	     
+																																			
+																		</p:selectOneMenu>																		
+																	</p:outputPanel>
+																</td>
+															</tr>
+															<tr>
+																<th align="right">ESPECIALIDADE:</th>
+																<td>
+																	<p:selectOneMenu id="especialidadeCB" 
+																				     value="#{iController.integrante.especialidade}"
+																				     converter="omnifaces.SelectItemsConverter" 
+																  				     style="width: 185px; font-size: 11px;">
+																  			
+																  			<f:selectItem itemLabel="-" itemValue="#{null}"/>
+																  			<f:selectItems value="#{iController.especialidadesLista}" var="a" itemLabel="#{a.nome}"/>	     
+																																		
+																	</p:selectOneMenu>
+																</td>
+															</tr>
+															<tr>
+																<th align="right">CATEGORIA:</th>
+																<td>
+																	<p:outputPanel id="categoriaPainel">
+																		<p:selectOneMenu id="categoriaCB" 
+																					     value="#{iController.integrante.categoria}"
+																					     converter="omnifaces.SelectItemsConverter" 
+																	  				     style="width: 185px; font-size: 11px;">
+																	  			
+																	  			<f:selectItem itemLabel="-" itemValue="#{null}"/>	
+																	  			<f:selectItems value="#{iController.categoriasLista}" var="a" itemLabel="#{a.nome}"/>     
+																																			
+																		</p:selectOneMenu>
+																	</p:outputPanel>
+																</td>
+															</tr>
+															<!-- <tr>
+																<th align="right"></th>
+																<td></td>
+															</tr> -->															
+														</table>
+														<!-- fim lado direito -->
+													</td>
+												</tr>
+												
+												<tr>
+													<td colspan="2" height="174px"></td>
+												</tr>
+												
+											</table>
+										</p:tab>
+										
+										<!-- <p:tab title="DADOS ADICIONAIS">
+										</p:tab> -->
+									</p:tabView>
+									
+								</center>								
+								
+								
+								<table border="0" width="100%"  cellpadding="0" cellspacing="0">
+									<tr><td align="center">
+										
+											<table border="0">
+												<tr>
+													<td>
+														<p:commandButton id="salvarBT"
+																		 value="Gravar"
+																		  
+																		 update="form"
+																		 title="Gravar novo integrante"
+																		 
+																		 style="width: 80px; color: #0000CD;" 
+																		 icon="pi pi-save"
+																		 rendered="#{iController.modoNovo == true}" />
+													</td>
+													<td>
+														<p:commandButton value="Eliminar"																	 
+																		 title="Eliminar integrante"
+																		 disabled="true"
+																		 style="width: 80px; color: red;" 
+																		 icon="pi pi-trash"
+																		 rendered="#{iController.modoNovo == true}"/>														
+														
+													</td>
+													<td>
+														<p:commandButton value="Cancelar" 
+																         action="#{iController.cancelarGeral()}"
+																	     update="form"
+																	     title="Cancelar novo privilegio"
+																	     style="width: 80px; color: #800000;" 
+																	     icon="pi pi-times"
+																	     rendered="#{iController.modoNovo == true}"/>
+													</td>													
+												</tr>
+											</table>
+										
+									</td></tr>
+								</table>
+								
+								
+							</p:outputPanel>
+							<!-- fim novo integrante ................................. -->
+							
+							
+							
+							
+							
+							
+							
+							
+							<!-- ....alt/del integrante .............................. -->
+							<p:outputPanel rendered="#{iController.modoEditar == true}">
+								
+								<p:tabView>
+									
+									<!-- <p:tab title="FOTOGRAFIA">
+											<table border="1" width="100%" >
+												<tr>
+													<td align="center">														
+														
+														<p:fileUpload value="#{iController.fotoCarregada}" 
+														              mode="simple" 
+														              auto="true"
+														              update="fotoCarregadaPainel"/>
+														
+														
+													</td>
+												</tr>
+												<tr>
+													<td align="center">
+														
+														<p:outputPanel id="fotoCarregadaPainel">
+															<p:graphicImage value="#{iController.fotoCarregada}"
+																		    width="264" height="225" 
+														                    rendered="#{not empty iController.fotoCarregada}" />
+														</p:outputPanel>														
+														                
+													</td>
+												</tr>
+											</table>
+									</p:tab> -->
+									
+									<p:tab title="DADOS PESSOAIS">
+									</p:tab>
+									
+									<p:tab title="DADOS PROFISSIONAIS">
+									</p:tab>
+									
+								</p:tabView>
+								
+								<table border="1" width="100%">
+									<tr>
+										<td width="26.6%"></td>
+										<td></td>
+									</tr>
+								</table>
+								
+							</p:outputPanel>
+							<!-- fim alt/del integrante .............................. -->
+							
+						
+						</td></tr>
+					</table>
+					
+				</p:outputPanel>
+				<!-- FIM ALT/DEL DE INTEGRANTE............................ -->
+			</td>
+		</tr>
+	</table>
+	 
+</ui:decorate>

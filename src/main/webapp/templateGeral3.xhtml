@@ -1,0 +1,400 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+<!-- xmlns:ui="http://xmlns.jcp.org/jsf/facelets"  -->
+<h:head>
+	
+	<!-- meta tags para o controle de cache -->
+	<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+	
+	<title> #{isController.tituloTemplate()} </title>
+	<!-- <link rel = "icon" type = "image/png" href = "rendasgest_logo.png"/>   -->
+	
+	<link rel="stylesheet" href="css/template.css"/>
+	
+	<script type="text/javascript">
+	    PrimeFaces.locales ['de'] = {
+	        closeText: 'Fechar',
+	        prevText: 'Anterior',
+	        nextText: 'Seguinte',
+	        monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+	        monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+	        dayNames: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+	        dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+	        dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+	        weekHeader: 'Semana',
+	        firstDay: 1,
+	        isRTL: false,
+	        showMonthAfterYear: false,
+	        yearSuffix: '',
+	        timeOnlyTitle: 'Apenas hora',
+	        timeText: 'Tempo',
+	        hourText: 'Hora',
+	        minuteText: 'Minuto',
+	        secondText: 'Segundo',
+	        currentText: 'Data actual',
+	        ampm: false,
+	        month: 'Mês',
+	        week: 'Semana',
+	        day: 'Dia',
+	        allDayText: 'Dia inteiro'
+	    };
+	</script>
+	
+	<script type ="text/javascript"> 
+	    window.onload = window.history.forward(0);	    
+	</script>
+	
+</h:head> 
+<body class="table" onload="window.history.forward(0);">
+
+	<center>
+			
+		<!--     DIV DA TOPO ............................................... -->
+		<div class="topo5" style="width: 99%; background-color: white">
+			<h:form enctype="multipart/form-data">
+				
+				<p:growl id="mensagem" showDetail="true" life="2700"/>
+				
+				<!--     SESSÃO DE USUÁRIO VÁLIDA ************************ -->				
+				<!-- <p:outputPanel rendered="#{uController.usuario != null}"> -->
+				<p:outputPanel rendered="#{uController.verificaUsuarioNaSessao() == true}">
+					
+					<table border="0" width="100%" style="font-size: 11px">
+							<tr>
+								<td width="50%"> 
+									<p:outputLabel value="#{isController.tituloSistemaTopo()}" 
+									               style="margin-left: 10px"/>
+								</td>
+								<td width="50%" align="right">
+									<p:outputLabel value="#{uController.pegarNomeclaturaCompletaUsuario()}" style="margin-right: 10px"/>
+								</td>								
+							</tr>
+							<tr>
+								<td colspan="3" align="center" > 
+									
+									
+									<!-- Menu Usuário Administrador ***************************** -->
+									<p:menubar rendered="#{uController.verificaPerfilUsuarioAdm() == true}" style="font-size: 13px">
+								    	
+								    	<c:forEach items="#{uController.func36PegaItensMenuAdm(3, null)}" var="item3">
+								    		
+								    		<p:menuitem value="#{item3.descricao}" url="#{item3.caminhoFicheiroXhtml}" icon="#{item3.icone}" rendered="#{item3.caminhoFicheiroXhtml != null}"/>								    		
+								    		<p:submenu label="#{item3.descricao}" icon="#{item3.icone}" rendered="#{item3.caminhoFicheiroXhtml == null}">
+								    			
+								    			<c:forEach items="#{uController.func36PegaItensMenuAdm(6, item3.codigo)}" var="item6">
+								    				
+								    				<p:menuitem value="#{item6.descricao}" url="#{item6.caminhoFicheiroXhtml}" icon="#{item6.icone}" rendered="#{item6.caminhoFicheiroXhtml != null}"/>
+								    				<p:submenu label="#{item6.descricao}" icon="#{item6.icone}" rendered="#{item6.caminhoFicheiroXhtml == null}">
+								    					
+								    					<c:forEach items="#{uController.func36PegaItensMenuAdm(9, item6.codigo)}" var="item9">
+								    						
+								    						<p:menuitem value="#{item9.descricao}" url="#{item9.caminhoFicheiroXhtml}" icon="#{item9.icone}" rendered="#{item9.caminhoFicheiroXhtml != null}"/>
+								    						<p:submenu label="#{item9.descricao}" icon="#{item9.icone}" rendered="#{item9.caminhoFicheiroXhtml == null}">
+								    							
+								    							<c:forEach items="#{uController.func36PegaItensMenuAdm(12, item9.codigo)}" var="item12">
+								    								
+								    								<p:menuitem value="#{item12.descricao}" url="#{item12.caminhoFicheiroXhtml}" icon="#{item12.icone}" rendered="#{item12.caminhoFicheiroXhtml != null}"/>
+								    								<p:submenu label="#{item12.descricao}" icon="#{item12.icone}" rendered="#{item12.caminhoFicheiroXhtml == null}">
+								    									
+								    									<c:forEach items="#{uController.func36PegaItensMenuAdm(15, item12.codigo)}" var="item15">
+								    										<p:menuitem value="#{item15.descricao}" url="#{item15.caminhoFicheiroXhtml}" icon="#{item15.icone}" rendered="#{item15.caminhoFicheiroXhtml != null}"/>
+								    									</c:forEach>
+								    									
+								    								</p:submenu>
+								    								
+								    							</c:forEach>
+								    							
+								    						</p:submenu>
+								    						
+								    					</c:forEach>
+								    					
+								    				</p:submenu>
+								    				
+								    			</c:forEach>
+								    			
+								    		</p:submenu>
+								    		
+								    	</c:forEach>
+								    	
+								    	
+								    	<f:facet name="options">
+							                <p:commandButton value="Sair" 
+															 action="#{uController.logout2()}"
+											                 ajax="false" 
+								    				         icon="pi pi-sign-out" 
+								    				         title="Sair do sistema" 
+								    				         style="width: 70px"
+								    				         update="form"/>
+							            </f:facet>								    	
+								    	
+								    </p:menubar>									
+								    <!-- Fim Menu Usuário Administrador ***************************** -->
+									
+									
+									
+									
+									
+									<!--     Menu de Outros Usuário ***************************** -->
+									<p:menubar rendered="#{uController.verificaPerfilUsuarioAdm() == false}" style="font-size: 13px">
+								    	
+								    	<p:menuitem value="HOME" url="home.xhtml" icon="pi pi-home" style="width: 80px;"/>
+								    	
+								    	<c:forEach items="#{uController.func37PegaItensMenuUsuario(3, null, uController.pegaUsuarioLogado().grupo)}" var="item3">
+								    		
+								    		<p:menuitem value="#{item3.descricao}" url="#{item3.caminhoFicheiroXhtml}" icon="#{item3.icone}" rendered="#{item3.caminhoFicheiroXhtml != null}"/>								    		
+								    		<p:submenu label="#{item3.descricao}" icon="#{item3.icone}" rendered="#{item3.caminhoFicheiroXhtml == null}">
+								    			
+								    			<c:forEach items="#{uController.func37PegaItensMenuUsuario(6, item3.codigo, uController.pegaUsuarioLogado().grupo)}" var="item6">
+								    				
+								    				<p:menuitem value="#{item6.descricao}" url="#{item6.caminhoFicheiroXhtml}" icon="#{item6.icone}" rendered="#{item6.caminhoFicheiroXhtml != null}"/>
+								    				<p:submenu label="#{item6.descricao}" icon="#{item6.icone}" rendered="#{item6.caminhoFicheiroXhtml == null}">
+								    					
+								    					<c:forEach items="#{uController.func37PegaItensMenuUsuario(9, item6.codigo, uController.pegaUsuarioLogado().grupo)}" var="item9">
+								    						
+								    						<p:menuitem value="#{item9.descricao}" url="#{item9.caminhoFicheiroXhtml}" icon="#{item9.icone}" rendered="#{item9.caminhoFicheiroXhtml != null}"/>
+								    						<p:submenu label="#{item9.descricao}" icon="#{item9.icone}" rendered="#{item9.caminhoFicheiroXhtml == null}">
+								    							
+								    							<c:forEach items="#{uController.func37PegaItensMenuUsuario(12, item9.codigo, uController.pegaUsuarioLogado().grupo)}" var="item12">
+								    								
+								    								<p:menuitem value="#{item12.descricao}" url="#{item12.caminhoFicheiroXhtml}" icon="#{item12.icone}" rendered="#{item12.caminhoFicheiroXhtml != null}"/>
+								    								<p:submenu label="#{item12.descricao}" icon="#{item12.icone}" rendered="#{item12.caminhoFicheiroXhtml == null}">
+								    									
+								    									<c:forEach items="#{uController.func37PegaItensMenuUsuario(15, item12.codigo, uController.pegaUsuarioLogado().grupo)}" var="item15">
+								    										<p:menuitem value="#{item15.descricao}" url="#{item15.caminhoFicheiroXhtml}" icon="#{item15.icone}" rendered="#{item15.caminhoFicheiroXhtml != null}"/>
+								    									</c:forEach>
+								    									
+								    								</p:submenu>
+								    								
+								    							</c:forEach>
+								    							
+								    						</p:submenu>
+								    						
+								    					</c:forEach>
+								    					
+								    				</p:submenu>
+								    				
+								    			</c:forEach>
+								    			
+								    		</p:submenu>
+								    		
+								    	</c:forEach>
+								    	
+								    	
+								    	<f:facet name="options">
+							                <p:commandButton value="Sair" 
+															 action="#{uController.logout2()}"
+											                 ajax="false" 
+								    				         icon="pi pi-sign-out" 
+								    				         title="Sair do sistema" 
+								    				         style="width: 70px"
+								    				         update="form"/>
+							            </f:facet>
+								    	
+								    </p:menubar>
+									<!-- Fim Menu de Outros Usuário ***************************** -->
+									
+									
+									<!-- menu asm manual -->
+									<!-- <p:menubar rendered="#{uController.verificaPerfilUsuarioAdm() == true}" style="background-color: white;">
+								        
+								        <p:menuitem value="HOME" url="home.xhtml" icon="pi pi-home" style="width: 80px;"/>
+								        
+								        <p:submenu label="GESTÃO ESCOLAR" icon="pi pi-briefcase" style="width: 180px;">
+								        	
+								        	<p:submenu label="ADMINISTRAÇÃO" icon="pi pi-building">
+												
+												<p:submenu label="DIREÇÃO" icon="pi pi-folder-open">
+												</p:submenu>
+																								
+												<p:submenu label="FINANÇAS" icon="pi pi-folder-open">
+												</p:submenu>
+																								
+												<p:submenu label="INF-ESTR ESCOLAR" icon="pi pi-folder-open">
+							                        <p:menuitem value="Áreas"                icon="pi pi-file-o"/>
+													<p:menuitem value="Áreas de específicas" icon="pi pi-file-o"/>
+													<p:menuitem value="Laboratórios"         icon="pi pi-file-o"/>
+													<p:menuitem value="Património"           icon="pi pi-file-o"/>
+													<p:menuitem value="Salas de aulas"       icon="pi pi-file-o"/>
+							                    </p:submenu>
+							                    
+							                    <p:submenu label="RECURS. HUMANOS" icon="pi pi-folder-open">
+													<p:menuitem value="Categorias"         icon="pi pi-file-o"/>
+													<p:menuitem value="Especialidades"     icon="pi pi-file-o"/>
+													<p:menuitem value="Habilitações literárias"  icon="pi pi-file-o"/>
+													<p:menuitem value="Municípios"         icon="pi pi-file-o"/>
+													<p:menuitem value="Províncias"         icon="pi pi-file-o"/>
+												</p:submenu>	
+																					
+												<p:submenu label="SECRETARIA" icon="pi pi-folder-open">
+													<p:menuitem value="Inscrições" icon="pi pi-file-o"/>
+													<p:menuitem value="Matriculas" icon="pi pi-file-o"/>											
+												</p:submenu>
+												
+											</p:submenu>
+											
+											
+											<p:submenu label="PEDAGOGIA" icon="pi pi-book">
+												
+												<p:submenu label="CALENDÁRIO ACAD." icon="pi pi-folder-open">
+								                	<p:menuitem value="Ano lectívo" icon="pi pi-calendar"/>
+								                </p:submenu>
+								                
+								                <p:submenu label="INFOMAÇÃO ACAD." icon="pi pi-folder-open">
+								                	<p:menuitem value="Alunos"             icon="pi pi-file-o" url="/alunos.xhtml"/>
+												   	<p:menuitem value="Áreas de formaçoes" icon="pi pi-file-o"/>
+												   	<p:menuitem value="Coordenaçoes"       icon="pi pi-file-o"/>
+													<p:menuitem value="Cursos"             icon="pi pi-file-o"/>
+													<p:menuitem value="Horários"           icon="pi pi-file-o"/>
+													<p:menuitem value="Professores"        icon="pi pi-file-o"/>
+													<p:menuitem value="Turmas"             icon="pi pi-file-o"/>
+								                </p:submenu>
+												
+												<p:submenu label="PAUTAS" icon="pi pi-folder-open">
+								                	<p:menuitem value="Mini pautas"   icon="pi pi-map"/>
+													<p:menuitem value="Pautas gerais" icon="pi pi-map"/>
+								                </p:submenu>
+												
+											</p:submenu>
+								        	
+								        </p:submenu>
+								        
+								       <p:submenu label="SISTEMA" icon="pi pi-fw pi-cog" style="width: 180px;">
+								        	<p:menuitem value="Integrantes"        icon="pi pi-id-card" url="/integrantes2.xhtml"/>
+											<p:menuitem value="Grupos"             icon="pi pi-file-o"  url="/grupos.xhtml"/>
+											<p:menuitem value="Grupo privilégios"  icon="pi pi-file-o"  url="/gruposPrivilegios2.xhtml"/>	
+											<p:menuitem value="Grupo privilégios4"  icon="pi pi-file-o"  url="/gruposPrivilegios4.xhtml"/>									
+											<p:menuitem value="Módulos de sistema" icon="pi pi-file-o"  url="modulosDoSistema2.xhtml"/>
+											<p:menuitem value="Módulos de sistema4" icon="pi pi-file-o"  url="modulosDoSistema4.xhtml"/>
+											<p:menuitem value="Usuários"           icon="pi pi-users" url="/usuarios.xhtml"/>
+								        </p:submenu>
+								    </p:menubar> -->
+									<!-- menu asm manual -->
+									
+									
+								</td>							
+							</tr>
+					</table>
+					
+				</p:outputPanel>
+				<!-- FIM SESSÃO DE USUÁRIO VÁLIDA ************************ -->
+				
+				
+				<!--     SESSÃO DE USUÁRIO EXPIRADA ********************** -->
+				<!-- <p:outputPanel rendered="#{uController.usuario == null}"> -->
+				<p:outputPanel rendered="#{uController.verificaUsuarioNaSessao() == false}">
+					<!-- nada -->
+				</p:outputPanel>
+				<!-- FIM SESSÃO DE USUÁRIO EXPIRADA ********************** -->
+				
+				
+			</h:form>
+		</div>
+		<!-- FIM DIV DA TOPO ............................................... -->
+		
+		
+		
+		
+		
+		<!--     DIV DA CENTRO ............................................. -->
+		<div class="meio5" style="width: 99%; background-color: white">
+			
+			<h:form id="form" enctype="multipart/form-data">
+				
+				<p:growl id="mensagem" showDetail="true" life="2700"/>
+				
+				<!--     SESSÃO DE USUÁRIO VÁLIDA ************************ -->				
+				<p:outputPanel rendered="#{uController.verificaUsuarioNaSessao() == true}">
+					
+					<table border="0" cellpadding="0" cellspacing="0">
+			        	<tr>
+			        		<td align="center"> 
+			        			<ui:insert/>		        			
+			        		</td>
+			        		<!-- <td> 
+			        			<p:ajaxStatus id="processamentoStatus">
+								    <f:facet name="start">
+								        Aqui você pode adicionar código HTML ou PrimeFaces para mostrar o indicador de processamento global
+								        <img src="loading.gif" width="30px" height="30px"/>
+								    </f:facet>
+								    <f:facet name="complete">
+								        Aqui você pode adicionar código HTML ou PrimeFaces para esconder o indicador de processamento global após a conclusão da ação do botão
+								    </f:facet>
+								</p:ajaxStatus>	        			
+			        		</td> -->
+			        	</tr>	
+			        	<tr>
+			        		<td align="center"> 
+			        			<p:ajaxStatus id="processamentoStatus">
+								    <f:facet name="start">
+								        <!-- Aqui você pode adicionar código HTML ou PrimeFaces para mostrar o indicador de processamento global -->
+								        <img src="loading.gif" width="30px" height="30px" style="margin-top: 2px"/>
+								    </f:facet>
+								    <f:facet name="complete">
+								        <!-- Aqui você pode adicionar código HTML ou PrimeFaces para esconder o indicador de processamento global após a conclusão da ação do botão -->
+								    </f:facet>
+								</p:ajaxStatus>	        			
+			        		</td>
+			        	</tr>		        	
+			        </table>
+					
+				</p:outputPanel>
+				<!-- FIM SESSÃO DE USUÁRIO VÁLIDA ************************ -->
+				
+				
+				<!--     SESSÃO DE USUÁRIO EXPIRADA ********************** -->
+				<p:outputPanel rendered="#{uController.verificaUsuarioNaSessao() == false}">
+					
+					<p:outputPanel style="margin-top: 200px">
+						<table border="0">
+							<tr>
+								<td align="center">
+									<p:outputLabel value="A sua sessão expirou. Faça o login." 
+									               style="color: red; font-size: 12px"/>
+								</td>
+							</tr>
+							<tr>
+								<td align="center">
+									<p:commandButton id="login"
+													 value="Login" 
+													 action="#{uController.logout3()}"
+													 update="form"																	 
+													 title="Clique para efectuar o login"
+													 style="width: 80px; font-size: 12px; font-weight: bold;" 
+													 icon="pi pi-sign-in"/>
+								</td>
+							</tr>
+						</table>
+					</p:outputPanel>
+					
+				</p:outputPanel>
+				<!-- FIM SESSÃO DE USUÁRIO EXPIRADA ********************** -->
+				
+			</h:form>
+		</div>
+		<!-- FIM DIV DA CENTRO ............................................. -->
+		
+		
+		
+		<!-- DIV DA BASE ................................................... -->
+		<div class="base2" style="width: 99%; background-color: white" >
+			<table border="0" width="40%" class="tabelaAlinhadaCentro">
+				 <tr>
+				 	<td align="center">
+				 		<p:outputLabel value="#{isController.tituloSistemaBase()}" 
+				 			           style="font-size: 9px"/>
+				 	</td> 
+				 </tr>
+			</table>
+		</div>
+		<!-- FIM DIV DA BASE ............................................... -->
+				
+	</center>
+
+</body> 
+</html>

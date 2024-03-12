@@ -1,0 +1,8 @@
+Código Javascript para bloqueio dos Botões Back e Forward. Mas só funciona no Firefox.
+
+<script type="text/javascript">
+        history.pushState(null, null, document.URL);
+		window.addEventListener('popstate', function () {
+		    	history.pushState(null, null, document.URL);
+		});
+</script> <!-- só funciona no Firefox -->

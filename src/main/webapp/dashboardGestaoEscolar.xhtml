@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:decorate 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="templateGeral5.xhtml"> 
+
+	
+	<!--     SESSÃO DE USUÁRIO VÁLIDA ************************ -->				
+	<p:outputPanel id="sessaoValida" rendered="#{uController.verificaUsuarioNaSessao() == true}"> 
+		
+		<h4 class="tituloPagina">
+			<p:outputLabel value="#{mdsController4.persistencia.func003PegaPrefixoTituloPagina('dashboardGestaoEscolar.xhtml')}"/>
+			<p:outputLabel value="#{mdsController4.persistencia.func004PegaTituloPagina('dashboardGestaoEscolar.xhtml')}" 
+			               style="color: #CC6600"/>
+		</h4>		
+            
+        
+        	
+		
+		
+	</p:outputPanel>
+	<!-- FIM SESSÃO DE USUÁRIO VÁLIDA ************************ -->
+	
+	
+	<!--     SESSÃO DE USUÁRIO INVÁLIDA ************************ -->				
+	<p:outputPanel id="sessaoiInvalida" rendered="#{uController.verificaUsuarioNaSessao() == false}"> 
+		
+		<p:outputLabel value="A sua sessão expirou..."/>		
+		
+	</p:outputPanel>
+	<!-- FIM SESSÃO DE USUÁRIO INVÁLIDA ************************ -->
+	
+	 
+</ui:decorate>

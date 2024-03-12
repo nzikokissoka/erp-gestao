@@ -1,0 +1,866 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:decorate       
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="templateGeral5.xhtml"> 
+
+	<h4  class="tituloPagina">
+		<p:outputLabel value="#{mdsController4.persistencia.func003PegaPrefixoTituloPagina('gruposPrivilegios4.xhtml')}"/>
+		<p:outputLabel value="#{mdsController4.persistencia.func004PegaTituloPagina('gruposPrivilegios4.xhtml')}" 
+		               style="color: #CC6600"/>
+	</h4>
+	
+	<table border="0" style="fonte-size: 11px" cellpadding="0" cellspacing="0">
+		<tr>
+			<td valign="top">
+				<!--     Grupos ************************** -->
+				<table border="0" width="400px">
+					<tr>
+						<td valign="top">
+							
+							<!--     grupos Cabeçalho****************************** -->
+							<p:toolbar>
+								
+								<p:toolbarGroup>
+									<p:commandButton action="#{gpController4.cancelarGeral()}"
+										  		     title="Cancelar geral"
+										  		     update="form" 
+										  		     style="color: #800000;" 
+										  		     icon="pi pi-times"/>
+								</p:toolbarGroup>
+								
+								<p:toolbarGroup align="right" style="margin-right: 30%" rendered="#{gpController4.modoNovo == false and gpController4.modoEditar == false}">
+									<p:outputLabel>
+										<p:outputLabel value="LISTAGEM DE GRUPOS" />							
+									</p:outputLabel>
+								</p:toolbarGroup>								
+								
+							</p:toolbar>
+							<!-- fim grupos Cabeçalho****************************** -->
+							
+							
+							<!--     grupos Listagem******************************* -->
+							<p:dataTable value="#{gpController4.grupoLista}"
+											 var="a" rowKey="#{a.id}" 
+											 selection="#{gpController4.grupoSelecionado}"
+											 disabledSelection="#{gpController4.modoPrivilegios == true}"
+										     emptyMessage="Sem grupos cadastrados" 
+										     selectionMode="single" 
+										     scrollable="true"
+										  	 scrollHeight="550"
+										     widgetVar="filtro" style="font-size: 11px">
+									
+									<p:column headerText="GRUPO" 
+											  filterBy="#{a.nome}" 
+											  sortBy="#{a.nome}"
+											  filterStyle="display:none"
+											  style="text-align: left; width: 325px;">
+										<h:outputText style="vertical-align: left;"
+										              value="#{a.nome}"/>
+									</p:column>
+									
+									<p:ajax event="rowSelect" 
+										    listener="#{gpController4.selecionaRegistroGrupo()}" 
+										  	update="form"/>
+									
+							</p:dataTable>
+							<!-- fim grupos Listagem******************************* -->
+							
+						</td>
+					</tr>
+				</table>
+				<!-- Fim Grupos ************************** -->
+			</td>
+			
+			
+			
+			
+			<td valign="top">
+				<!--     Privilagios de Grupo ************************** -->
+				<p:outputPanel id="grupoPrivilegiosPainel">
+					
+					<p:outputPanel rendered="#{gpController4.modoPrivilegios == true}">
+						
+						<table border="0" width="770px">
+							<tr>
+								<td>
+									
+									<!--     grupo privilegios Cabeçalho .................... -->
+									<p:toolbar>
+										
+										<p:toolbarGroup>
+											<p:commandButton action="#{gpController4.cancelar()}"
+										  		             title="Cancelar privilégios para o grupo #{gpController4.grupo.nome}"
+										  		             update="form:grupoPrivilegiosPainel" 
+										  		             style="color: #800000;" 
+										  		             icon="pi pi-times" />
+											
+											<p:commandButton action="#{gpController4.novoRegistro()}"
+													  		 title="Novo privilégio do grupo #{gpController4.grupo.nome}"
+													  		 disabled="#{gpController4.modoNovo == true or gpController4.modoEditar == true}" 
+													  		 update="form:grupoPrivilegiosPainel" 
+													  		 style="color: #347C17;" 
+													  		 icon="pi pi-plus" />
+										</p:toolbarGroup>
+										
+										
+										<p:toolbarGroup align="right" style="margin-right: 12%" rendered="#{gpController4.modoNovo == false and gpController4.modoEditar == false}">
+											<p:outputLabel>
+												<p:outputLabel value="LISTAGEM DE PRIVILÉGIOS PARA O GRUPO #{gpController4.grupo.nome}" />							
+											</p:outputLabel>
+										</p:toolbarGroup>
+										
+										<p:toolbarGroup align="right" style="margin-right: 12%" rendered="#{gpController4.modoNovo == true  and gpController4.modoEditar == false}">
+											<p:outputLabel>
+												<p:outputLabel value="NOVO PRIVILÉGIO PARA O GRUPO #{gpController4.grupo.nome}" style="color: #347C17;"/>							
+											</p:outputLabel>
+										</p:toolbarGroup>
+										
+										<p:toolbarGroup align="right" style="margin-right: 12%" rendered="#{gpController4.modoNovo == false and gpController4.modoEditar == true}">
+											<p:outputLabel>
+												<p:outputLabel value="ALTERAR PRIVILÉGIO DO GRUPO #{gpController4.grupo.nome}" style="color: #F88017;"/>
+											</p:outputLabel>
+										</p:toolbarGroup>
+										
+									</p:toolbar>	
+									<!-- fim grupo privilegios Cabeçalho .................... -->
+									
+									
+									<!--     grupo privilegios listagem ..................... -->
+									<p:outputPanel rendered="#{gpController4.modoNovo   == false and 
+									                           gpController4.modoEditar == false}">
+										
+										<p:dataTable value="#{gpController4.grupoPrivilegioLista}"
+													 var="a" rowKey="#{a.id}" 
+													 selection="#{gpController4.grupoPrivilegioSelecionado}"
+													 disabledSelection="#{gpController4.modoNovo == true or 
+													                      gpController4.modoEditar == true}"
+												     emptyMessage="Sem privilégios cadastrados" 
+												     selectionMode="single" 
+												     scrollable="true"
+												  	 scrollHeight="550"
+												     widgetVar="filtro" style="font-size: 11px">
+											
+											<p:columnGroup type="header">
+												
+												<p:row>
+								                    <p:column rowspan="2" headerText="ÍTEM" style="text-align: left; width: 175px;"/>
+								                    <p:column colspan="5" headerText="PRIVILÉGIOS"/>
+								                    <p:column rowspan="2" headerText="VISIBILIDADE" style="text-align: center; width: 80px;" rendered="#{gpController4.func005visualizaParteAdm() == true}"/>
+								                </p:row>	
+								                
+								                <p:row>
+								                    <p:column headerText="NOVO" style="text-align: left; width: 40px;"/>
+								                    <p:column headerText="INSERIR" style="text-align: left; width: 40px;"/>
+								                    <p:column headerText="ALTERAR" style="text-align: left; width: 40px;"/>
+								                    <p:column headerText="ELIMINAR" style="text-align: left; width: 40px;"/>
+								                    <p:column headerText="PESQUISAR" style="text-align: left; width: 40px;"/>								                    
+								                </p:row>		                
+								                
+											</p:columnGroup>
+											
+											<p:column>
+												#{a.moduloSistema.descricao}								                
+								            </p:column>
+								            
+								            <p:column>	
+								            	#{a.novo != null ? 'SIM' : '-'}
+								            </p:column>
+								            
+								            <p:column>
+								                #{a.salvar != null ? 'SIM' : '-'}
+								            </p:column>
+								            
+								            <p:column>
+								                #{a.editar != null ? 'SIM' : '-'}
+								            </p:column>
+								            
+								            <p:column>
+								                #{a.deletar != null ? 'SIM' : '-'}
+								            </p:column>
+								            
+								            <p:column>
+								                #{a.pesquisar != null ? 'SIM' : '-'}
+								            </p:column>
+								            
+								            <p:column rendered="#{gpController4.func005visualizaParteAdm() == true}">
+								            	#{a.visibilidade != null ? 'NÃO' : 'SIM'}							                
+								            </p:column>
+											
+											
+											<p:ajax event="rowSelect" 
+												    listener="#{gpController4.selecionaRegistro()}" 
+												  	update="form:grupoPrivilegiosPainel"/>
+											
+											
+										</p:dataTable>
+										
+									</p:outputPanel>
+									<!-- fim grupo privilegios listagem ..................... -->
+									
+									
+									
+									
+									<!--     grupo privilegios Alt/Del ...................... -->
+									<p:outputPanel rendered="#{gpController4.modoNovo   == true or 
+									                           gpController4.modoEditar == true}">
+										
+										<p:panel style="font-size: 11px">
+											
+											<!-- novo .............................................. -->
+											<p:outputPanel rendered="#{gpController4.modoNovo == true}">
+												
+												<table border="0" width="100%">
+													<!-- modulo3 ... -->
+													<tr>
+														<th align="right" width="30%">MÓDULO:</th> <!--  -->
+														<td>
+															<p:selectOneMenu id="moduloDoSistema3CBX" 
+															                 value="#{gpController4.moduloDoSistema3}" 
+															                 converter="omnifaces.SelectItemsConverter" 
+											  				                 style="width: 450px">
+																<f:selectItem noSelectionOption="true" itemLabel=" - seleccione "/>
+																<f:selectItems value="#{gpController4.moduloDoSistema3Lista}" var="a" itemLabel="#{a.descricao}"/>
+																<f:ajax event="change" 
+																        render="form:moduloDoSistema6Label form:moduloDoSistema6Painel 
+																        		form:moduloDoSistema9Label form:moduloDoSistema9Painel 
+																        		form:moduloDoSistema12Label form:moduloDoSistema12Painel 
+																        		form:moduloDoSistema15Label form:moduloDoSistema15Painel 
+																                form:botoesPainel 
+																	            form:privilegiosLabel form:privilegiosPainel
+																	            form:visibilidadeLabel form:valoresPrivilegiosPainel																	                 
+																	            form:valoresVisibilidadeRBT" 
+																        listener="#{gpController4.func003PegaModuloDoSistema6Lista(gpController4.moduloDoSistema3, gpController4.grupo)}"/>
+															</p:selectOneMenu>									
+														</td>
+													</tr>
+													<!-- fim modulo3 -->
+													
+													
+													
+													<!-- modulo6 ... -->
+													<tr>
+														<th align="right">														
+															<p:outputPanel id="moduloDoSistema6Label">
+																<p:outputLabel value="ÍTEM DE #{gpController4.moduloDoSistema3.descricao}" 
+																               rendered="#{gpController4.func008VerXhtml(gpController4.moduloDoSistema3)          == false and 
+																                           gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema3) == true}"/>
+															</p:outputPanel>						
+														</th>
+														<td>
+															<p:outputPanel id="moduloDoSistema6Painel">
+																
+																<p:selectOneMenu id="moduloDoSistema6CBX" 
+																                 value="#{gpController4.moduloDoSistema6}" 
+																                 converter="omnifaces.SelectItemsConverter" 
+												  				                 style="width: 450px"
+												  				                 rendered="#{gpController4.func008VerXhtml(gpController4.moduloDoSistema3)          == false and 
+																	                         gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema3) == true}">
+																	<f:selectItem noSelectionOption="true" itemLabel=" - seleccione "/>
+																	<f:selectItems value="#{gpController4.moduloDoSistema6Lista}" var="a" itemLabel="#{a.descricao}"/>
+																	<f:ajax event="change" 
+																	        render="form:moduloDoSistema9Label form:moduloDoSistema9Painel 
+																	        		form:moduloDoSistema12Label form:moduloDoSistema12Painel 
+																	        		form:moduloDoSistema15Label form:moduloDoSistema15Painel 
+																	                form:botoesPainel 
+																	                form:privilegiosLabel form:privilegiosPainel
+																	                form:visibilidadeLabel form:valoresPrivilegiosPainel																	                 
+																	                form:valoresVisibilidadeRBT" 
+																	        listener="#{gpController4.func003PegaModuloDoSistema9Lista(gpController4.moduloDoSistema6, gpController4.grupo)}"/>
+																</p:selectOneMenu>
+																
+															</p:outputPanel>
+														</td>
+													</tr>
+													<!-- fim modulo6 -->
+													
+													
+													
+													<!-- modulo9 ... -->
+													<tr>
+														<th align="right">														
+															<p:outputPanel id="moduloDoSistema9Label">
+																<p:outputLabel value="ÍTEM DE #{gpController4.moduloDoSistema6.descricao}" 
+																               rendered="#{gpController4.func008VerXhtml(gpController4.moduloDoSistema6)          == false and 
+																                           gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema6) == true}"/>
+															</p:outputPanel>						
+														</th>
+														<td>
+															<p:outputPanel id="moduloDoSistema9Painel">
+																
+																<p:selectOneMenu id="moduloDoSistema9CBX" 
+																                 value="#{gpController4.moduloDoSistema9}" 
+																                 converter="omnifaces.SelectItemsConverter" 
+												  				                 style="width: 450px"
+												  				                 rendered="#{gpController4.func008VerXhtml(gpController4.moduloDoSistema6)          == false and 
+																	                         gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema6) == true}">
+																	<f:selectItem noSelectionOption="true" itemLabel=" - seleccione "/>
+																	<f:selectItems value="#{gpController4.moduloDoSistema9Lista}" var="a" itemLabel="#{a.descricao}"/>
+																	<f:ajax event="change" 
+																	        render="form:moduloDoSistema12Label form:moduloDoSistema12Painel 
+																	        		form:moduloDoSistema15Label form:moduloDoSistema15Painel 
+																	                form:botoesPainel 
+																	                form:privilegiosLabel form:privilegiosPainel
+																	                form:visibilidadeLabel form:valoresPrivilegiosPainel																	                 
+																	                form:valoresVisibilidadeRBT" 
+																	        listener="#{gpController4.func003PegaModuloDoSistema12Lista(gpController4.moduloDoSistema9, gpController4.grupo)}"/>
+																</p:selectOneMenu>
+																
+															</p:outputPanel>
+														</td>
+													</tr>
+													<!-- fim modulo9 -->
+													
+													
+													
+													
+													<!-- modulo12 ... -->
+													<tr>
+														<th align="right">														
+															<p:outputPanel id="moduloDoSistema12Label">
+																<p:outputLabel value="ÍTEM DE #{gpController4.moduloDoSistema9.descricao}" 
+																               rendered="#{gpController4.func008VerXhtml(gpController4.moduloDoSistema9)          == false and 
+																                           gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema9) == true}"/>
+															</p:outputPanel>						
+														</th>
+														<td>
+															<p:outputPanel id="moduloDoSistema12Painel">
+																
+																<p:selectOneMenu id="moduloDoSistema12CBX" 
+																                 value="#{gpController4.moduloDoSistema12}" 
+																                 converter="omnifaces.SelectItemsConverter" 
+												  				                 style="width: 450px"
+												  				                 rendered="#{gpController4.func008VerXhtml(gpController4.moduloDoSistema9)          == false and 
+																	                         gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema9) == true}">
+																	<f:selectItem noSelectionOption="true" itemLabel=" - seleccione "/>
+																	<f:selectItems value="#{gpController4.moduloDoSistema12Lista}" var="a" itemLabel="#{a.descricao}"/>
+																	<f:ajax event="change" 
+																	        render="form:moduloDoSistema15Label form:moduloDoSistema15Painel 
+																	                form:botoesPainel 
+																	                form:privilegiosLabel form:privilegiosPainel
+																	                form:visibilidadeLabel form:valoresPrivilegiosPainel																	                 
+																	                form:valoresVisibilidadeRBT" 
+																	        listener="#{gpController4.func003PegaModuloDoSistema15Lista(gpController4.moduloDoSistema12, gpController4.grupo)}"/>
+																</p:selectOneMenu>
+																
+															</p:outputPanel>
+														</td>
+													</tr>
+													<!-- fim modulo12 -->
+													
+													
+													
+													<!-- modulo15 ... -->
+													<tr>
+														<th align="right">														
+															<p:outputPanel id="moduloDoSistema15Label">
+																<p:outputLabel value="ÍTEM DE #{gpController4.moduloDoSistema12.descricao}" 
+																               rendered="#{gpController4.func008VerXhtml(gpController4.moduloDoSistema12)          == false and 
+																                           gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema12) == true}"/>
+															</p:outputPanel>						
+														</th>
+														<td>
+															<p:outputPanel id="moduloDoSistema15Painel">
+																
+																<p:selectOneMenu id="moduloDoSistema15CBX" 
+																                 value="#{gpController4.moduloDoSistema15}" 
+																                 converter="omnifaces.SelectItemsConverter" 
+												  				                 style="width: 450px"
+												  				                 rendered="#{gpController4.func008VerXhtml(gpController4.moduloDoSistema12)          == false and 
+																	                         gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema12) == true}">
+																	<f:selectItem noSelectionOption="true" itemLabel=" - seleccione "/>
+																	<f:selectItems value="#{gpController4.moduloDoSistema15Lista}" var="a" itemLabel="#{a.descricao}"/>
+																	<f:ajax event="change" 
+																	        render="form:botoesPainel 
+																	                form:privilegiosLabel form:privilegiosPainel
+																	                form:visibilidadeLabel form:valoresPrivilegiosPainel																	                 
+																	                form:valoresVisibilidadeRBT"/>
+																</p:selectOneMenu>
+																
+															</p:outputPanel>
+														</td>
+													</tr>
+													<!-- fim modulo15 -->
+													
+													
+													
+													<!-- privilegios ... -->
+													<tr>
+														<td colspan="2"></td>
+													</tr>
+													<tr>
+														<th align="right">														
+															<p:outputPanel id="privilegiosLabel">
+																<p:outputLabel value="PRIVILÉGIOS DE #{gpController4.moduloDoSistema3.descricao}" 
+																               rendered="#{gpController4.func008VerXhtml(gpController4.moduloDoSistema3)          == true and 
+																                           gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema3) == true}"/>
+																                           
+																<p:outputLabel value="PRIVILÉGIOS DE #{gpController4.moduloDoSistema6.descricao}" 
+																               rendered="#{gpController4.func008VerXhtml(gpController4.moduloDoSistema6)          == true and 
+																                           gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema6) == true}"/>
+																                           
+																<p:outputLabel value="PRIVILÉGIOS DE #{gpController4.moduloDoSistema9.descricao}" 
+																               rendered="#{gpController4.func008VerXhtml(gpController4.moduloDoSistema9)          == true and 
+																                           gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema9) == true}"/>
+																                           
+																<p:outputLabel value="PRIVILÉGIOS DE #{gpController4.moduloDoSistema12.descricao}" 
+																               rendered="#{gpController4.func008VerXhtml(gpController4.moduloDoSistema12)          == true and 
+																                           gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema12) == true}"/>
+																                          
+																<p:outputLabel value="PRIVILÉGIOS DE #{gpController4.moduloDoSistema15.descricao}" 
+																               rendered="#{gpController4.func008VerXhtml(gpController4.moduloDoSistema15)          == true and 
+																                           gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema15) == true}"/>
+															</p:outputPanel>						
+														</th>
+														<td>
+															<p:outputPanel id="valoresPrivilegiosPainel" >
+																
+																<p:outputPanel rendered="#{gpController4.func008VerXhtml(gpController4.moduloDoSistema3)          == true and 
+																                           gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema3) == true 
+																                           or 
+																                           gpController4.func008VerXhtml(gpController4.moduloDoSistema6)          == true and 
+																                           gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema6) == true 
+																                           or 
+																                           gpController4.func008VerXhtml(gpController4.moduloDoSistema9)          == true and 
+																                           gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema9) == true 
+																                           or 
+																                           gpController4.func008VerXhtml(gpController4.moduloDoSistema12)          == true and 
+																                           gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema12) == true 
+																                           or 
+																                           gpController4.func008VerXhtml(gpController4.moduloDoSistema15)          == true and 
+																                           gpController4.func009VerObjectoNaoNulo(gpController4.moduloDoSistema15) == true}">
+																	
+																	<table border="0" cellpadding="0" cellspacing="1">
+																		<tr>
+																			<td align="right"> 
+																				<p:outputLabel value="Novo" style="margin-right: 1px"/> 
+																			</td>
+																			<td>
+																				<p:selectOneMenu value="#{gpController4.grupoPrivilegio.novo}" 
+																					             converter="omnifaces.SelectItemsConverter" 
+																	  				             style="width: 30px">
+																					<f:selectItem itemLabel="-" itemValue="#{null}"/>
+																					<f:selectItem itemLabel="Sim" itemValue="#{1}"/>
+																					<f:ajax event="change" render="form:botoesPainel"/>																																		
+																				</p:selectOneMenu>
+																			</td>
+																			
+																			<td align="right"> 
+																				<p:outputLabel value="Inserir" style="margin-left: 5px; margin-right: 1px"/> 
+																			</td>
+																			<td>
+																				<p:selectOneMenu value="#{gpController4.grupoPrivilegio.salvar}" 
+																					             converter="omnifaces.SelectItemsConverter" 
+																	  				             style="width: 30px">
+																					<f:selectItem itemLabel="-" itemValue="#{null}"/>
+																					<f:selectItem itemLabel="Sim" itemValue="#{1}"/>
+																					<f:ajax event="change" render="form:botoesPainel"/>																																		
+																				</p:selectOneMenu>
+																			</td>
+																			
+																			<td align="right"> 
+																				<p:outputLabel value="Alterar" style="margin-left: 5px; margin-right: 1px"/> 
+																			</td>
+																			<td>
+																				<p:selectOneMenu value="#{gpController4.grupoPrivilegio.editar}" 
+																					             converter="omnifaces.SelectItemsConverter" 
+																	  				             style="width: 30px">
+																					<f:selectItem itemLabel="-" itemValue="#{null}"/>
+																					<f:selectItem itemLabel="Sim" itemValue="#{1}"/>	
+																					<f:ajax event="change" render="form:botoesPainel"/>																																	
+																				</p:selectOneMenu>
+																			</td>
+																			
+																			<td align="right"> 
+																				<p:outputLabel value="Eliminar" style="margin-left: 5px; margin-right: 1px"/> 
+																			</td>
+																			<td>
+																				<p:selectOneMenu value="#{gpController4.grupoPrivilegio.deletar}" 
+																					             converter="omnifaces.SelectItemsConverter" 
+																	  				             style="width: 30px">
+																					<f:selectItem itemLabel="-" itemValue="#{null}"/>
+																					<f:selectItem itemLabel="Sim" itemValue="#{1}"/>
+																					<f:ajax event="change" render="form:botoesPainel"/>																																		
+																				</p:selectOneMenu>
+																			</td>
+																			
+																			<td align="right"> 
+																				<p:outputLabel value="Pesquisar" style="margin-left: 5px; margin-right: 1px"/> 
+																			</td>
+																			<td>
+																				<p:selectOneMenu value="#{gpController4.grupoPrivilegio.pesquisar}" 
+																					             converter="omnifaces.SelectItemsConverter" 
+																	  				             style="width: 30px">
+																					<f:selectItem itemLabel="-" itemValue="#{null}"/>
+																					<f:selectItem itemLabel="Sim" itemValue="#{1}"/>
+																					<f:ajax event="change" render="form:botoesPainel"/>																																		
+																				</p:selectOneMenu>
+																			</td>
+																		</tr>
+																	</table>
+																	
+																</p:outputPanel>
+																
+															</p:outputPanel>
+														</td>
+													</tr>
+													<!-- fim privilegios -->
+													
+													
+													
+													<!-- botõees ....-->
+													<tr>
+														<td colspan="2" height="10px"></td>
+													</tr>
+													
+													<tr>
+														<td align="right"></td>
+														<td>
+														
+															<p:outputPanel id="botoesPainel">
+																
+																<p:outputPanel rendered="#{gpController4.func010VerPrivilegioNaoNulo(gpController4.grupoPrivilegio.novo)      == true or 
+																                           gpController4.func010VerPrivilegioNaoNulo(gpController4.grupoPrivilegio.salvar)    == true or 
+																                           gpController4.func010VerPrivilegioNaoNulo(gpController4.grupoPrivilegio.editar)    == true or 
+																                           gpController4.func010VerPrivilegioNaoNulo(gpController4.grupoPrivilegio.deletar)   == true or 
+																                           gpController4.func010VerPrivilegioNaoNulo(gpController4.grupoPrivilegio.pesquisar) == true}">
+																	
+																	<p:commandButton id="salvarNBT"
+																					 value="Gravar"
+																					 action="#{gpController4.salvar2()}" 
+																					 update="form:grupoPrivilegiosPainel"
+																					 title="Gravar novo privilégio"
+																					 style="width: 90px; color: #0000CD; font-size: 12px" 
+																					 icon="pi pi-save"/>
+																	
+																	<p:commandButton id="deletarNBT"
+																	  				 value="Eliminar"
+																					 title="Eliminar privilégio"
+																					 disabled="true"
+																					 style="width: 90px; color: red; font-size: 12px" 
+																					 icon="pi pi-trash"/>
+																				
+																	<p:commandButton id="cancelarNBT"
+																	                 value="Cancelar" 
+																	                 action="#{gpController4.cancelar}"
+																		             update="form:grupoPrivilegiosPainel"
+																		             title="Cancelar gravação de novo privilegio"
+																		             style="width: 90px; color: #800000; font-size: 12px" 
+																		             icon="pi pi-times"/>
+																		
+																</p:outputPanel>
+																
+															</p:outputPanel>
+														
+														</td>
+													</tr>
+													<!-- fim botõees -->
+													
+												</table>
+												
+											</p:outputPanel>
+											<!-- fim novo .......................................... -->
+											
+											
+											
+											
+											
+											
+											
+											<!-- editar ............................................ -->
+											<p:outputPanel rendered="#{gpController4.modoEditar == true}">
+												
+												<table border="0" width="100%">
+													<!-- modulo3 ... -->
+													<tr>
+														<th align="right" width="30%">
+															<p:outputLabel value="MÓDULO:" rendered="#{gpController4.func011VerListaNaoNulo(gpController4.moduloDoSistema3Lista) == true}"/>
+														</th>
+														<td>
+															<p:selectOneMenu style="width: 450px" rendered="#{gpController4.func011VerListaNaoNulo(gpController4.moduloDoSistema3Lista) == true}">
+																<f:selectItems value="#{gpController4.moduloDoSistema3Lista}" var="a" itemLabel="#{a.descricao}"/>																
+															</p:selectOneMenu>									
+														</td>
+													</tr>
+													<!-- fim modulo3 -->
+													
+													
+													<!-- modulo6 ... -->
+													<tr>
+														<th align="right">														
+															<p:outputLabel value="ÍTEM DE #{gpController4.moduloDoSistema3Lista.get(0).descricao}" 
+																           rendered="#{gpController4.func011VerListaNaoNulo(gpController4.moduloDoSistema6Lista) == true}"/>						
+														</th>
+														<td>
+															<p:selectOneMenu style="width: 450px"
+												  				             rendered="#{gpController4.func011VerListaNaoNulo(gpController4.moduloDoSistema6Lista) == true}">
+																	<f:selectItems value="#{gpController4.moduloDoSistema6Lista}" var="a" itemLabel="#{a.descricao}"/>																	
+															</p:selectOneMenu>														
+														</td>
+													</tr>
+													<!-- fim modulo6 -->
+													
+													
+													
+													<!-- modulo9 ... -->
+													<tr>
+														<th align="right">														
+															<p:outputLabel value="ÍTEM DE #{gpController4.moduloDoSistema6Lista.get(0).descricao}" 
+																           rendered="#{gpController4.func011VerListaNaoNulo(gpController4.moduloDoSistema9Lista) == true}"/>						
+														</th>
+														<td>
+															<p:selectOneMenu style="width: 450px"
+												  				             rendered="#{gpController4.func011VerListaNaoNulo(gpController4.moduloDoSistema9Lista) == true}">
+																	<f:selectItems value="#{gpController4.moduloDoSistema9Lista}" var="a" itemLabel="#{a.descricao}"/>
+																	
+															</p:selectOneMenu>
+														</td>
+													</tr>
+													<!-- fim modulo9 -->
+													
+													
+													
+													
+													<!-- modulo12 ... -->
+													<tr>
+														<th align="right">														
+															<p:outputLabel value="ÍTEM DE #{gpController4.moduloDoSistema9Lista.get(0).descricao}" 
+																           rendered="#{gpController4.func011VerListaNaoNulo(gpController4.moduloDoSistema12Lista) == true}"/>						
+														</th>
+														<td>
+															<p:selectOneMenu style="width: 450px"
+												  				             rendered="#{gpController4.func011VerListaNaoNulo(gpController4.moduloDoSistema12Lista) == true}">
+																	<f:selectItems value="#{gpController4.moduloDoSistema12Lista}" var="a" itemLabel="#{a.descricao}"/>
+																	
+															</p:selectOneMenu>
+														</td>
+													</tr>
+													<!-- fim modulo12 -->
+													
+													
+													
+													<!-- modulo15 ... -->
+													<tr>
+														<th align="right">														
+															<p:outputLabel value="ÍTEM DE #{gpController4.moduloDoSistema12Lista.get(0).descricao}" 
+																           rendered="#{gpController4.func011VerListaNaoNulo(gpController4.moduloDoSistema15Lista) == true}"/>						
+														</th>
+														<td>
+															<p:selectOneMenu style="width: 450px"
+												  				             rendered="#{gpController4.func011VerListaNaoNulo(gpController4.moduloDoSistema15Lista) == true}">
+																	<f:selectItems value="#{gpController4.moduloDoSistema15Lista}" var="a" itemLabel="#{a.descricao}"/>
+																	
+															</p:selectOneMenu>
+														</td>
+													</tr>
+													<!-- fim modulo15 -->
+													
+													
+													<!--     privilegios ... -->
+													<tr>
+														<td colspan="2"></td>
+													</tr>
+													<tr>
+														<th align="right">														
+															<p:outputLabel value="PRIVILÉGIOS DE #{gpController4.moduloDoSistema3Lista.get(0).descricao}" 
+																           rendered="#{gpController4.func008VerXhtmlNaLista(gpController4.moduloDoSistema3Lista) == true}"/>
+																                           
+															<p:outputLabel value="PRIVILÉGIOS DE #{gpController4.moduloDoSistema6Lista.get(0).descricao}" 
+																           rendered="#{gpController4.func008VerXhtmlNaLista(gpController4.moduloDoSistema6Lista) == true}"/>
+																                           
+															<p:outputLabel value="PRIVILÉGIOS DE #{gpController4.moduloDoSistema9Lista.get(0).descricao}" 
+																           rendered="#{gpController4.func008VerXhtmlNaLista(gpController4.moduloDoSistema9Lista) == true}"/>
+																                           
+															<p:outputLabel value="PRIVILÉGIOS DE #{gpController4.moduloDoSistema12Lista.get(0).descricao}" 
+																           rendered="#{gpController4.func008VerXhtmlNaLista(gpController4.moduloDoSistema12Lista) == true}"/>
+																                          
+															<p:outputLabel value="PRIVILÉGIOS DE #{gpController4.moduloDoSistema15Lista.get(0).descricao}" 
+																           rendered="#{gpController4.func008VerXhtmlNaLista(gpController4.moduloDoSistema15Lista) == true}"/>						
+														</th>
+														<td>
+															<table border="0" cellpadding="0" cellspacing="1">
+																		<tr>
+																			<td align="right"> 
+																				<p:outputLabel value="Novo" style="margin-right: 1px"/> 
+																			</td>
+																			<td>
+																				<p:selectOneMenu value="#{gpController4.grupoPrivilegio.novo}" 
+																					             
+																	  				             style="width: 30px">
+																					<f:selectItem itemLabel="-" itemValue="#{null}"/>
+																					<f:selectItem itemLabel="Sim" itemValue="#{1}"/>
+																					<f:ajax event="change" render="form:botoesEditPainel"/>																																		
+																				</p:selectOneMenu>
+																			</td>
+																			
+																			<td align="right"> 
+																				<p:outputLabel value="Inserir" style="margin-left: 5px; margin-right: 1px"/> 
+																			</td>
+																			<td>
+																				<p:selectOneMenu value="#{gpController4.grupoPrivilegio.salvar}" 
+																					              
+																	  				             style="width: 30px">
+																					<f:selectItem itemLabel="-" itemValue="#{null}"/>
+																					<f:selectItem itemLabel="Sim" itemValue="#{1}"/>
+																					<f:ajax event="change" render="form:botoesEditPainel"/>																																		
+																				</p:selectOneMenu>
+																			</td>
+																			
+																			<td align="right"> 
+																				<p:outputLabel value="Alterar" style="margin-left: 5px; margin-right: 1px"/> 
+																			</td>
+																			<td>
+																				<p:selectOneMenu value="#{gpController4.grupoPrivilegio.editar}" 
+																					             
+																	  				             style="width: 30px">
+																					<f:selectItem itemLabel="-" itemValue="#{null}"/>
+																					<f:selectItem itemLabel="Sim" itemValue="#{1}"/>	
+																					<f:ajax event="change" render="form:botoesEditPainel"/>																																	
+																				</p:selectOneMenu>
+																			</td>
+																			
+																			<td align="right"> 
+																				<p:outputLabel value="Eliminar" style="margin-left: 5px; margin-right: 1px"/> 
+																			</td>
+																			<td>
+																				<p:selectOneMenu value="#{gpController4.grupoPrivilegio.deletar}" 
+																					             
+																	  				             style="width: 30px">
+																					<f:selectItem itemLabel="-" itemValue="#{null}"/>
+																					<f:selectItem itemLabel="Sim" itemValue="#{1}"/>
+																					<f:ajax event="change" render="form:botoesEditPainel"/>																																		
+																				</p:selectOneMenu>
+																			</td>
+																			
+																			<td align="right"> 
+																				<p:outputLabel value="Pesquisar" style="margin-left: 5px; margin-right: 1px"/> 
+																			</td>
+																			<td>
+																				<p:selectOneMenu value="#{gpController4.grupoPrivilegio.pesquisar}" 
+																					             
+																	  				             style="width: 30px">
+																					<f:selectItem itemLabel="-" itemValue="#{null}"/>
+																					<f:selectItem itemLabel="Sim" itemValue="#{1}"/>
+																					<f:ajax event="change" render="form:botoesEditPainel"/>																																		
+																				</p:selectOneMenu>
+																			</td>
+																		</tr>
+																		
+																		
+															</table>
+														</td>
+													</tr>
+													<!-- fim privilegios ... -->
+													
+													
+													<!-- botõees ....-->
+													<tr>
+														<td colspan="2" height="10px"></td>
+													</tr>
+													
+													<tr>
+														<td align="right"></td>
+														<td>
+														
+															<p:outputPanel id="botoesEditPainel">
+																
+																<p:outputPanel rendered="#{gpController4.func010VerPrivilegioNaoNulo(gpController4.grupoPrivilegio.novo)      == true or 
+																                           gpController4.func010VerPrivilegioNaoNulo(gpController4.grupoPrivilegio.salvar)    == true or 
+																                           gpController4.func010VerPrivilegioNaoNulo(gpController4.grupoPrivilegio.editar)    == true or 
+																                           gpController4.func010VerPrivilegioNaoNulo(gpController4.grupoPrivilegio.deletar)   == true or 
+																                           gpController4.func010VerPrivilegioNaoNulo(gpController4.grupoPrivilegio.pesquisar) == true}">
+																	
+																	<p:commandButton id="editarEditBT"
+																					 value="Gravar"
+																					 action="#{gpController4.editar}" 
+																					 update="form:grupoPrivilegiosPainel"
+																					 title="Gravar alteração no privilégio"
+																					 style="width: 90px; color: #0000CD; font-size: 12px" 
+																					 icon="pi pi-save">
+																		
+																		<p:confirm header="Confirmação"
+																			       message="Tem certeza que deseja gravar essa alteraçao?"
+																			       icon="ui-icon-info" />
+																		
+																	</p:commandButton>
+																	
+																	<p:commandButton id="deletarEditBT"
+																					 action="#{gpController4.eliminar}"
+																					 update="form:grupoPrivilegiosPainel"
+																	  				 value="Eliminar"
+																					 title="Eliminar privilégio"																					 
+																					 style="width: 90px; color: red; font-size: 12px" 
+																					 icon="pi pi-trash">
+																					 
+																		<p:confirm header="Confirmação"
+																			       message="Tem certeza que deseja eliminar esse privilégio?"
+																			       icon="ui-icon-info" />
+																					 
+																	</p:commandButton>
+																				
+																	<p:commandButton id="cancelarEditBT"
+																	                 value="Cancelar" 
+																	                 action="#{gpController4.cancelar}"
+																		             update="form:grupoPrivilegiosPainel"
+																		             title="Cancelar gravação de alteração/eliminação em privilegio"
+																		             style="width: 90px; color: #800000; font-size: 12px" 
+																		             icon="pi pi-times"/>
+																	
+																	
+																	
+																	<p:confirmDialog global="true" 
+																	                 showEffect="fade"
+																					 hideEffect="fade" 
+																					 responsive="true" 
+																					 width="400">
+																		
+																		<p:commandButton value="Não" 
+																		                 type="button" icon="pi pi-times"
+																						 styleClass="ui-confirmdialog-no ui-button-flat"
+																			             style="color: #565051" />
+										
+																		<p:commandButton value="Sim" 
+																		                 type="button" 
+																		                 icon="pi pi-check"
+																			             styleClass="ui-confirmdialog-yes" 
+																			             style="color: green" />
+																	</p:confirmDialog>
+																	
+																		
+																</p:outputPanel>
+																
+															</p:outputPanel>
+														
+														</td>
+													</tr>
+													<!-- fim botõees -->
+													
+													
+												</table>
+												
+											</p:outputPanel>
+											<!-- fim editar ........................................ -->
+											
+										</p:panel>
+										
+									</p:outputPanel>
+									<!-- fim grupo privilegios Alt/Del ...................... -->
+									
+									
+								</td>
+							</tr>
+						</table>
+						
+					</p:outputPanel>
+					
+				</p:outputPanel>
+				<!-- Fim Privilagios de Grupo ************************** -->
+			</td>
+		</tr>
+	</table>
+	
+	 
+</ui:decorate>

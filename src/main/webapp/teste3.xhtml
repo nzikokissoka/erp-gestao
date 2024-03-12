@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+	
+	<title>Menu3</title>
+	<style>
+        /* Estilos gerais */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+
+        /* Estilos do topo */
+        .topo {
+            background-color: white;
+            color: black;
+            position: fixed;
+            top: 0;
+            left: 204px;
+            right: 0;
+            height: 41px; /* Altura ajustada */
+            text-align: center;
+            line-height: 50px;
+            border-bottom: 1px solid #ccc; /* Adiciona uma borda inferior */
+        }
+
+        /* Estilos do menu1 horizontal */
+        .menu1 {
+            position: fixed;
+            top: 51px; /* Deixa espaço para o topo */
+            left: 0;
+            width: 200px; /* Largura ajustada */
+            height: calc(100% - 51px); /* Altura ajustada */
+            background-color: #f0f0f0;
+            border-right: 1px solid #ccc; /* Adiciona uma borda direita */
+        }
+
+        /* Estilos do menu2 vertical */
+        .menu2 {
+            position: fixed;
+            top: 41px; /* Deixa espaço para o topo */
+            left: 3px;
+            width: 200px; /* Largura ajustada */
+            height: calc(100% - 71px); /* Altura ajustada */
+            background-color: white; /*#f0f0f0*/
+            border-right: 1px solid #ccc; /* Adiciona uma borda direita */
+        }
+
+        /* Estilos do centro para conteúdos */
+        .centro {
+            position: absolute;
+            top: 51px; /* Posição a 51px do topo */
+            left: 200px; /* Largura do menu1 */
+            right: 0;
+            padding: 0 4px;
+            bottom: 50%; /* Ajuste para metade da altura da tela */
+            overflow-y: auto;
+        }
+
+        /* Estilos da base */
+        .base {
+            position: fixed;
+            bottom: 0;
+            left: 204px;
+            right: 0;
+            background-color: white; /*#f0f0f0*/
+            text-align: center;
+            line-height: 30px;
+            font-size: 10px;
+            height: 30px; /* Altura ajustada */
+            border-top: 1px solid #ccc; /* Adiciona uma borda superior */
+        }
+        
+        .ui-menuitem-text {
+            text-align: center; /* Alinha o texto do submenu ao centro */
+        }
+
+        .ui-menu-child {
+            text-align: center; /* Alinha os submenus ao centro */
+        }
+        
+    </style>
+</h:head> 
+<h:body> 
+	
+	<div class="topo">		
+		<p:menubar style="border: 0;">
+            <p:submenu label="Menu">
+                <p:menuitem value="Página 1" url="#" />
+                <p:menuitem value="Página 2" url="#" />
+                <p:menuitem value="Página 3" url="#" />
+                <p:menuitem value="Página 4" url="#" />
+            </p:submenu>
+            
+            <p:submenu label="Menu2">
+                <p:menuitem value="Página 1" url="#" />
+                <p:menuitem value="Página 2" url="#" />
+                <p:menuitem value="Página 3" url="#" />
+                <p:menuitem value="Página 4" url="#" />
+            </p:submenu>
+            
+            <p:submenu label="Menu3">
+                <p:menuitem value="Página 1" url="#" />
+                <p:menuitem value="Página 2" url="#" />
+                <p:menuitem value="Página 3" url="#" />
+                <p:menuitem value="Página 4" url="#" />
+            </p:submenu>
+            
+            <p:submenu label="Menu4">
+                <p:menuitem value="Página 1" url="#" />
+                <p:menuitem value="Página 2" url="#" />
+                <p:menuitem value="Página 3" url="#" />
+                <p:menuitem value="Página 4" url="#" />
+            </p:submenu>
+            
+            <p:submenu label="Menu">
+                <p:menuitem value="Página 1" url="#" />
+                <p:menuitem value="Página 2" url="#" />
+                <p:menuitem value="Página 3" url="#" />
+                <p:menuitem value="Página 4" url="#" />
+            </p:submenu>
+            
+            <f:facet name="options">
+							                <p:commandButton value="Sair" 
+															 ajax="false" 
+								    				         icon="pi pi-sign-out" 
+								    				         title="Sair do sistema" 
+								    				         style="width: 70px"
+								    				         update="form"/>
+			</f:facet>
+            
+        </p:menubar>	
+	</div>
+	
+    
+    <div class="menu2">
+    	<p:menu style="border: 0; background-color: white; width: 190px">
+            <p:submenu label="Options">
+                <p:menuitem value="Save (Non-Ajax)" icon="pi pi-save"/>
+                <p:menuitem value="Update" icon="pi pi-refresh"/>
+                <p:menuitem value="Delete" icon="pi pi-times"/>
+            </p:submenu> 
+            
+            <p:submenu label="Options 2">
+                <p:menuitem value="Save (Non-Ajax)" icon="pi pi-save"/>
+                <p:menuitem value="Update" icon="pi pi-refresh"/>
+                <p:menuitem value="Delete" icon="pi pi-times"/>
+                
+                <p:submenu label="Options 2.1">
+                	<p:menuitem value="Save (Non-Ajax)" icon="pi pi-save"/>
+                </p:submenu>
+                
+            </p:submenu>            
+        </p:menu>
+    </div>
+    <div class="centro">
+        centro
+    </div>
+    <div class="base">Base</div>
+	
+</h:body> 
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+	<!-- <link rel="icon" href="gamektec_logo.png" type="image/x-icon" /> -->
+	<link rel="stylesheet" href="css/template.css"/>
+	
+	<script type ="text/javascript"> 
+	    window.onload = window.history.forward(0);	    
+	</script>
+		
+</h:head> 
+
+<body class="table" onload="window.history.forward(0);"> 
+	
+	<h:form id="form" enctype="multipart/form-data">
+		
+		
+		<!--     DIV DO MEIO ########################################### -->
+		<div class="meio2" style="width: 99%;">	
+			
+			<!--     PARA LOGIN ***************************** -->
+			<p:outputLabel id="loginPanel">
+				
+				<table border="0" width="200px" class="tabelaAlinhadaCentro">
+					<tr>
+						<th>
+							<p:outputLabel value="LOGIN"/>
+						</th>
+					</tr>
+					<tr>
+						<td align="center">
+							<p:outputLabel value="Por favor, insira as suas credenciais" style="font-size: 8px"/>
+						</td>
+					</tr>
+					<tr>
+						<td align="center">
+							<p:inputText id="usuarioTXT" 
+							             value="#{uController.usuario.nomeUsuario}" 
+										 style="width: 95%" 
+										 maxlength="20" 
+										 required="true"
+										 placeholder="- USUÁRIO"/>
+						</td>
+					</tr>
+					<tr>
+						<td align="center">
+							<p:password id="senhaTXT" 
+										value="#{uController.usuario.senha}"
+										style="width: 95%" 
+										maxlength="20" 
+										required="true"
+										placeholder="- SENHA"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p:commandButton id="entrarBT" 
+							                 action="#{uController.login()}"
+								     	     icon="pi pi-sign-in" 
+								             value="Entrar" 
+								             style="color: blue; width: 100%"
+								             title="Fazer autenticação no sistema" 
+								             update="form"/>
+						</td>
+					</tr>
+				</table>
+				
+				<table border="0" width="500px" class="tabelaAlinhadaCentro">
+						<tr>
+							<td align="center">
+								<p:outputLabel value="#{uController.mensagemLogin}" 
+								               style="color: red"/>
+							</td>
+						</tr>
+				</table>
+				
+			</p:outputLabel>
+			<!-- FIM PARA LOGIN ***************************** -->
+			
+			
+			
+			<!--     PARA CRIAÇÃO DO PERFIL ADMINISTRADOR *** -->
+			<p:outputLabel id="criaPerfilAdministradorPanel">
+			</p:outputLabel>
+			<!-- FIM PARA CRIAÇÃO DO PERFIL ADMINISTRADOR *** -->
+			
+			
+			
+			<!--     PARA ALTERAÇÃO DE SENHA **************** -->
+			<p:outputLabel id="alteraSenhaPanel">
+			</p:outputLabel>
+			<!-- FIM PARA ALTERAÇÃO DE SENHA **************** -->
+		
+		</div>	
+		<!-- FIM DIV DO MEIO ########################################### -->
+		
+		
+		
+		
+		
+		
+		
+		<!-- DIV DA BASE ############################################### -->
+		<div class="base2" style="width: 99%">
+			 <table border="0" width="40%" class="tabelaAlinhadaCentro">
+			 	<tr>
+			 		<td align="center">
+			 			<p:outputLabel value="#{isController.tituloSistemaBase()}" 
+			 			               style="font-size: 9px"/>
+			 		</td> 
+			 	</tr>
+			 </table>
+		</div>
+		<!-- FIM DIV DA BASE ########################################### -->
+		
+	</h:form>
+	
+</body> 
+</html>

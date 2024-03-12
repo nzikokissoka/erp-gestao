@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+	
+	<title> #{isController.tituloTemplate()} </title>
+	<!-- <link rel = "icon" type = "image/png" href = "rendasgest_logo.png"/>   -->
+	
+	<link rel="stylesheet" href="css/template.css"/>
+	
+	<script type="text/javascript">
+	    PrimeFaces.locales ['de'] = {
+	        closeText: 'Fechar',
+	        prevText: 'Anterior',
+	        nextText: 'Seguinte',
+	        monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+	        monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+	        dayNames: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+	        dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+	        dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+	        weekHeader: 'Semana',
+	        firstDay: 1,
+	        isRTL: false,
+	        showMonthAfterYear: false,
+	        yearSuffix: '',
+	        timeOnlyTitle: 'Apenas hora',
+	        timeText: 'Tempo',
+	        hourText: 'Hora',
+	        minuteText: 'Minuto',
+	        secondText: 'Segundo',
+	        currentText: 'Data actual',
+	        ampm: false,
+	        month: 'Mês',
+	        week: 'Semana',
+	        day: 'Dia',
+	        allDayText: 'Dia inteiro'
+	    };
+	</script>
+	
+	<script type ="text/javascript"> 
+	    window.onload = window.history.forward(0);	    
+	</script>   
+	
+	
+</h:head> 
+<body class="table" onload="window.history.forward(0);">
+
+	<center>
+			
+		<!--     SESSÃO DE USUÁRIO VÁLIDA ************************ -->
+		<p:outputPanel rendered="#{uController.usuario != null}">
+			
+			<!--     DIV DA TOPO ............................................... -->
+			<div class="topo5" style="width: 99%; background-color: white"> 
+				
+				<h:form id="formTopo" enctype="multipart/form-data" style="font-size: 12px">
+					<p:growl id="mensagem" showDetail="true" life="2660"/>
+					<table border="0" width="100%">
+						<tr>
+							<td width="50%"> 
+								<p:outputLabel value="#{isController.tituloSistemaTopo()}" 
+								               style="margin-left: 10px"/>
+							</td>
+							<td align="right">
+								<p:outputLabel value="#{uController.descricaoUsuario(uController.usuario)}"/>
+							</td>
+							<td align="right" width="5%">
+								
+								<p:commandButton value="Sair" 
+												 action="#{uController.logout()}"
+								                 ajax="false" 
+					    				         icon="pi pi-sign-out" 
+					    				         title="Sair do sistema" 
+					    				         style="width: 70px"
+					    				         update="form"/>
+								
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3" align="center"> 
+								<p:menubar style="font-size: 12px">
+									<p:menuitem value="HOME" url="home.xhtml" icon="pi pi-home"/>
+									
+									<p:submenu label="ADMINISTRAÇÃO" icon="pi pi-building">
+										
+										<p:menuitem value="Direção"  icon="pi pi-file-o"/>										
+										<p:menuitem value="Finanças" icon="pi pi-file-o"/>					
+										
+										<p:submenu label="Infraestrt. escolar" icon="pi pi-file-o">
+											<p:menuitem value="Áreas"                icon="pi pi-file-o"/>
+											<p:menuitem value="Áreas de específicas" icon="pi pi-file-o"/>
+											<p:menuitem value="Laboratórios"         icon="pi pi-file-o"/>
+											<p:menuitem value="Património"           icon="pi pi-file-o"/>
+											<p:menuitem value="Salas de aulas"       icon="pi pi-file-o"/>
+										</p:submenu>		
+										
+										<p:submenu label="Recursos humanos" icon="pi pi-file-o">
+											<p:menuitem value="Categorias"         icon="pi pi-file-o"/>
+											<p:menuitem value="Especialidades"     icon="pi pi-file-o"/>
+											<p:menuitem value="Habilitações literárias"  icon="pi pi-file-o"/>
+											<p:menuitem value="Municípios"         icon="pi pi-file-o"/>
+											<p:menuitem value="Províncias"         icon="pi pi-file-o"/>
+										</p:submenu>	
+																			
+										<p:submenu label="Secretaria" icon="pi pi-file-o">
+											<p:menuitem value="Inscrições" icon="pi pi-file-o"/>
+											<p:menuitem value="Matriculas" icon="pi pi-file-o"/>											
+										</p:submenu>
+										
+									</p:submenu>
+																		
+									
+									<p:submenu label="PEDAGOGIA" icon="pi pi-book">
+										
+										<p:menuitem value="Alunos"             icon="pi pi-file-o"/>
+										<p:menuitem value="Áreas de formaçoes" icon="pi pi-file-o"/>
+																				
+										<p:submenu label="Calendário acad." icon="pi pi-calendar">
+											<p:menuitem value="Ano lectívo" icon="pi pi-file-o"/>
+										</p:submenu>
+										
+										<p:menuitem value="Coordenaçoes" icon="pi pi-file-o"/>
+										<p:menuitem value="Cursos"       icon="pi pi-file-o"/>
+										<p:menuitem value="Horários"     icon="pi pi-file-o"/>
+										
+										<p:submenu label="Pautas" icon="pi pi-map">
+											<p:menuitem value="Mini pautas"   icon="pi pi-file-o"/>
+											<p:menuitem value="Pautas gerais" icon="pi pi-file-o"/>
+										</p:submenu>
+										
+										<p:menuitem value="Professores" icon="pi pi-file-o"/>
+										<p:menuitem value="Turmas"      icon="pi pi-file-o"/>
+										
+									</p:submenu>
+									
+									<p:submenu label="SISTEMA" icon="pi pi-cog">
+										
+										<p:menuitem value="Integrantes"        icon="pi pi-id-card"/>
+										<p:menuitem value="Grupos"             icon="pi pi-file-o"/>
+										<p:menuitem value="Grupo privilégios"  icon="pi pi-file-o"/>										
+										<p:menuitem value="Módulos de sistema" icon="pi pi-file-o" url="modulosSistema.xhtml"/>
+										<p:menuitem value="Pessoas"            icon="pi pi-user"/>
+										<p:menuitem value="Usuários"           icon="pi pi-users"/>
+										
+									</p:submenu>
+									
+								</p:menubar>
+								
+								
+								
+							</td>							
+						</tr>
+					</table>
+				</h:form>
+				
+			</div>
+			<!-- FIM DIV DA TOPO ............................................... -->
+			
+			
+			<!--     DIV DA CENTRO ............................................. -->
+			<div class="meio5" style="width: 99%; background-color: white">
+				
+				<table border="0" width="100%">
+		        	<tr>
+		        		<td align="center"> 
+		        			<h:form id="form" enctype="multipart/form-data">
+		        				<p:growl id="mensagem" showDetail="true" life="2700"/>
+		        				<ui:insert/> 
+		        			</h:form>		        			
+		        		</td>
+		        	</tr>
+		        </table>
+				
+			</div>
+			<!-- FIM DIV DA CENTRO ............................................. -->
+			
+		</p:outputPanel>
+		<!-- FIM SESSÃO DE USUÁRIO VÁLIDA ************************ -->
+		
+		
+		
+		
+		
+		
+		<!--     SESSÃO DE USUÁRIO EXPIRADA ********************** -->
+		<p:outputPanel rendered="#{uController.usuario == null}">
+			
+			<!--     DIV DA TOPO ............................................... -->
+			<div class="topo2" style="width: 99%"> 			
+			</div>
+			<!-- FIM DIV DA TOPO ............................................... -->
+			
+			
+			<!--     DIV DA CENTRO ............................................. -->
+			<div class="meio3" style="width: 99%">
+				
+				<h:form id="form2" enctype="multipart/form-data">
+					
+					<p:outputPanel style="margin-top: 100px">
+						
+						<table border="0" width="50%" style="color: #B21807; font-size: 11px; font-weight: bold; margin-top: 150px">						
+							<tr>
+								<td width="50%" align="center">
+									<p:outputLabel value="Infelizmente a sua sessão expirou." />
+								</td>							
+							</tr>
+							<tr>
+								<td width="50%" align="center">
+									<p:outputLabel value="Clique no botão abaixo para um novo login." />
+								</td>							
+							</tr>
+							<tr>
+								<td width="50%" align="center"></td>							
+							</tr>
+							<tr>
+								<td width="50%" align="center"></td>							
+							</tr>
+							<tr>
+								<td align="center" width="50%">
+									<p:commandButton value="Novo login" 
+													 action="#{uController.reencaminhaPaginaIndex()}"
+										 		     ajax="false" 
+										 			 icon="pi pi-undo"
+										             title="Novo login" 
+										             style="width: 100px" />
+								</td>
+							</tr>
+						</table> 
+						
+					</p:outputPanel>
+					
+				</h:form>
+				
+			</div>
+			<!-- FIM DIV DA CENTRO ............................................. -->
+			
+		</p:outputPanel>
+		<!-- FIM SESSÃO DE USUÁRIO EXPIRADA ********************** -->
+		
+		
+		
+		
+		
+		<!-- DIV DA BASE ................................................... -->
+		<div class="base2" style="width: 99%">
+			 <table border="0" width="40%" class="tabelaAlinhadaCentro">
+			 	<tr>
+			 		<td align="center">
+			 			<p:outputLabel value="#{isController.tituloSistemaBase()}" 
+			 			               style="font-size: 9px"/>
+			 		</td> 
+			 	</tr>
+			 </table>
+		</div>
+		<!-- FIM DIV DA BASE .............................................. -->
+		
+	</center>
+
+</body> 
+</html>

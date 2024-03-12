@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+
+<h:head>
+	
+	<script type="text/javascript">
+	    PrimeFaces.locales ['de'] = {
+	        closeText: 'Fechar',
+	        prevText: 'Anterior',
+	        nextText: 'Seguinte',
+	        monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+	        monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+	        dayNames: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+	        dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+	        dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+	        weekHeader: 'Semana',
+	        firstDay: 1,
+	        isRTL: false,
+	        showMonthAfterYear: false,
+	        yearSuffix: '',
+	        timeOnlyTitle: 'Apenas hora',
+	        timeText: 'Tempo',
+	        hourText: 'Hora',
+	        minuteText: 'Minuto',
+	        secondText: 'Segundo',
+	        currentText: 'Data actual',
+	        ampm: false,
+	        month: 'Mês',
+	        week: 'Semana',
+	        day: 'Dia',
+	        allDayText: 'Dia inteiro'
+	    };
+	    
+	    window.onload = window.history.forward(0);
+	    	    
+	</script>
+	
+	<style>
+        /* Estilos gerais */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* Estilo do topo */
+        .topo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 42px;            
+            text-align: center;
+            line-height: 50px;
+            background-color: white;
+            font-size: 11px;
+        }
+
+        /* Estilo do menu vertical */
+        .menu-vertical {
+            position: absolute;
+            top: 45px;
+            left: 0;
+            width: 200px;
+            height: calc(100% - 72px); /*height: calc(100% - 100px);*/
+            background-color: #ccc; /*background-color: #ccc;*/
+            font-size: 11px;
+            /*border-right: 1px solid #ccc;*/
+        }
+
+        /* Estilo do conteúdo */
+        .conteudo {
+            position: absolute;
+            top: 45px;
+            left: 202px; /* Largura do menu vertical */
+            width: calc(100% - 205px);  /*width: calc(100% - 205px); */         
+            height: calc(100% - 74px); /*height: calc(100% - 200px);*/
+            padding: 1px; 
+            background-color: white;
+            font-size: 11px;            
+        }
+
+        /* Estilo da base */
+        .base {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 25px;            
+            text-align: center;
+            line-height: 25px;
+            color: red; 
+            background-color: white;           
+            font-family: sans-serif; 
+            /*border-right: 1px solid #ccc;*/          
+        }
+        
+        /* Layout do formulário */
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        
+        .form-column {
+            flex: 1 1 30%; /* Cresce e encolhe com o tamanho da tela */
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        
+        /* Layout do formulário para base*/
+        .form-row-base {
+            display: flex;
+            flex-wrap: wrap;                  
+        }
+        
+        .form-column-base {
+            flex: 1 1 30%; /* Cresce e encolhe com o tamanho da tela */
+            margin-right: 10px; 
+            font-size: 12px;                        
+        }
+        
+        .form-column:last-child {
+            margin-right: 0; font-size: 8px;
+        }
+        
+        /* Estilo de div container */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 90%; /* Ajuste conforme necessário */
+            margin: 0 auto; /* Centralizar o conteúdo */
+        }
+        
+        
+        /* Estilo para tabelas*/
+        .tabela {
+		    display: table;
+		    table-layout: auto;
+		    width: 100%; /* Definir a largura da tabela como 100% */
+		  }
+		  
+		  .tabela td {
+		      padding: 2px; 
+		      font-size: 11px; 
+		   }
+        
+
+        /* Estilo responsivo */
+        @media only screen and (max-width: 768px) {
+            
+            .topo {
+                font-size: 10px;
+            }
+            .menu-vertical {
+                width: 100%;
+                height: auto;
+                top: 50px;
+            }
+            .conteudo {
+                left: 0;
+                width: 100%;
+                top: 75px;
+                width: calc(100% - 4px);
+                height: calc(100% - 110px); /*height: calc(100% - 75px);*/
+            }
+            .base {
+                font-size: 7px;
+            }
+            
+            .form-column {
+                flex: 1 1 100%; /* Em telas menores, ocupa 100% da largura */
+                margin-right: 0;
+                font-size: 7px;
+            }  
+            
+            
+            .form-column-base {
+	            font-size: 7px;                        
+	        } 
+            
+            
+            .tabela td {
+		      font-size: 8px;
+		    }
+                                
+            
+        }
+    </style>
+	
+</h:head> 
+<body> 
+	
+	<!-- *** TOPO **************************** -->
+	<div class="topo">
+		
+		<h:form enctype="multipart/form-data">
+			
+			<p:growl id="mensagem" showDetail="true" life="2700"/>
+			
+			<!-- *** sessão inválida *************************************************** -->
+			<p:outputPanel rendered="#{uController.verificaUsuarioNaSessao() == false}">
+					<!-- nada  -->
+			</p:outputPanel>
+			<!-- fim sessão inválida *************************************************** -->
+			
+			
+			
+			<!-- *** sessão válida ***************************************************** -->
+			<p:outputPanel rendered="#{uController.verificaUsuarioNaSessao() == true}">
+				
+				<!-- *** menu Usuário Administrador ***************************** -->
+				<p:menubar rendered="#{uController.verificaPerfilUsuarioAdm() == true}" style="font-size: 13px">
+					<p:menuitem value="HOME" url="home.xhtml" icon="pi pi-home" style="width: 80px; margin-left: 195px"/>
+				</p:menubar>
+				<!-- fim menu Usuário Administrador ***************************** -->
+				
+				
+				<!-- *** menu Outros Usuários *********************************** -->
+				<p:menubar rendered="#{uController.verificaPerfilUsuarioAdm() == false}" style="font-size: 13px">				
+					<p:menuitem value="HOME" url="home.xhtml" icon="pi pi-home" style="width: 80px; margin-left: 195px"/>
+				</p:menubar>
+				<!-- fim menu Outros Usuários *********************************** -->
+				
+			</p:outputPanel>
+			<!-- FIM sessão válida ***************************************************** -->			
+			
+		</h:form>
+		
+	</div>
+	<!-- FIM TOPO **************************** -->
+	
+	
+	
+    <div class="menu-vertical">Menu Vertical</div>
+    <div class="conteudo">
+        Conteúdo
+        <!-- Seu conteúdo aqui -->
+    </div>
+    
+    
+    
+    <!-- *** BASE **************************** -->
+    <div class="base">
+    	
+    	<!-- <div class="form-row-base">
+			<div class="form-column-base">#{isController.tituloSistemaBase()}</div>
+			<div class="form-column-base">#{uController.pegarNomeclaturaCompletaUsuario()}</div>
+		</div> -->
+		
+		<!--     sessão inválida *************************************************** -->
+		<p:outputPanel rendered="#{uController.verificaUsuarioNaSessao() == false}">
+			<div class="form-row-base">
+				<div class="form-column-base"></div>
+				<div class="form-column-base"></div>
+			</div>
+		</p:outputPanel>
+		<!-- fim sessão inválida *************************************************** -->
+		
+		
+		
+		<!--     sessão válida ***************************************************** -->
+		<p:outputPanel rendered="#{uController.verificaUsuarioNaSessao() == true}">
+			<div class="form-row-base">
+				<div class="form-column-base">#{isController.tituloSistemaBase()}</div>
+				<div class="form-column-base">#{uController.pegarNomeclaturaCompletaUsuario()}</div>
+			</div>
+		</p:outputPanel>
+		<!-- fim sessão válida ***************************************************** -->
+    	
+    </div>    
+    <!-- FIM BASE **************************** -->
+
+</body> 
+</html>
